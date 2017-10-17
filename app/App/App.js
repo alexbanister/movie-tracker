@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class MovieIndex extends Component {
+export default class App extends Component {
   constructor() {
     super();
   }
@@ -8,8 +8,9 @@ export default class MovieIndex extends Component {
   render() {
     return (
       <div>
-      MOVIES
+        <h1>Movie Watcher</h1>
+        <h1>Movie Watcher</h1>
       </div>
-    )
+    );
   }
 }
