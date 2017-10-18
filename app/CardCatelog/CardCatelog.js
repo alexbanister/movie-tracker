@@ -33,8 +33,8 @@ class CardCatelog extends Component {
         "overview": "Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years.",
         "release_date": "2017-10-04"
       }];
-      this.props.addRecentMovies(mockData);
-    // const recentMovies = await fetchRecentMovies();
+      const recentMovies = await fetchRecentMovies();
+      this.props.addRecentMovies(recentMovies);
     // this.setState({
     //   recentMovies: recentMovies
     // });
