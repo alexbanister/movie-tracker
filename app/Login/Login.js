@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { userLogin } from '../API/User';
+import { connect } from 'redux';
+import LoginAction from './LoginAction';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
+      email: 'tman2272@aol.com',
+      password: 'password',
       disabled: true
     };
   }
 
-  handleLogin(event){
+  async handleLogin(event){
     event.preventDefault();
-    userLogin(this.state.email, this.state.password);
-
+    const userData = await userLogin(this.state.email, this.state.password);
+    this.props.LoginAction(userData);
   }
 
   handleChange(field, event){
@@ -44,3 +46,14 @@ export default class Login extends Component {
     );
   }
 }
+
+
+const mapStateToProps =  (store) => ({
+  user: store.user
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginAction: ( user ) => { dispatch(LoginAction(user)); }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

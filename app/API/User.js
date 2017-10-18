@@ -5,8 +5,9 @@ const userLogin = (email, password) => {
     headers: {'Content-Type': 'application/json'}
 })
     .then(response => response.json())
-    .then(parsedResponse => console.log(parsedResponse))
-}
+    .then(parsedResponse => parsedResponse)
+    .catch(err => console.log(err.json()));
+};
 module.exports = {
   userLogin
 };
