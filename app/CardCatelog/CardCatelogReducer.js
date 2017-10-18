@@ -8,7 +8,6 @@ export const recentMovies = (store = [], action) => {
 };
 
 export const favoriteMovies = (store = [], action) => {
-  console.log(action);
   switch (action.type) {
   case 'GET_FAVORITES':
     return store;

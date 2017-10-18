@@ -40,6 +40,7 @@ class CardCatelog extends Component {
           { slidesToShow: 5 }
       }]
     };
+
     const allMovies = this.props.recentMovies.map( (movie) => {
       return <Card key={movie.id} movie={movie} />;
     });
@@ -59,7 +60,9 @@ const mapStateToProps =  (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addRecentMovies: ( recentMovies ) => { dispatch(addRecentMovies(recentMovies)); },
+  addRecentMovies: ( recentMovies ) => {
+    dispatch(addRecentMovies(recentMovies));
+  },
   getFavorites: () => { dispatch(getFavorites()); }
 });
 
