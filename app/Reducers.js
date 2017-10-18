@@ -1,6 +1,12 @@
 import { combineReducers } from 'redux';
-import { recentMovies } from './CardCatelog/CardCatelogReducer';
+import { user } from './Login/LoginReducer';
+import {
+  recentMovies,
+  favoriteMovies
+} from './CardCatelog/CardCatelogReducer';
 
 export default combineReducers({
-  recentMovies
+  recentMovies,
+  favoriteMovies,
+  user
 });

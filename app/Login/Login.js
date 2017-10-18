@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { userLogin } from '../API/User';
-import { connect } from 'redux';
-import LoginAction from './LoginAction';
+import { connect } from 'react-redux';
+import { LoginAction } from './LoginAction';
 
 class Login extends Component {
   constructor() {
@@ -16,7 +16,7 @@ class Login extends Component {
   async handleLogin(event){
     event.preventDefault();
     const userData = await userLogin(this.state.email, this.state.password);
-    this.props.LoginAction(userData);
+    this.props.loginAction(userData.data);
   }
 
   handleChange(field, event){
