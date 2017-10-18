@@ -32,7 +32,8 @@ function signIn(req, res, next) {
     });
   })
   .catch(function (err) {
-    return next(err);
+    res.status(535).json({status: 'failed', error: err.message});
+    // return next(err);
   });
 }
 
