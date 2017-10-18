@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 import { addTodo } from './CardCatelogActions';
 import React, { Component } from 'react';
 import { fetchRecentMovies } from '../API/movieDatabase';
-import Card from '../Card/Card'
+import Card from '../Card/Card';
+import ReactSiema from 'react-siema';
+import Slide from '../Slide/Slide';
 
 export default class CardCatelog extends Component {
   constructor(){
@@ -21,12 +23,17 @@ export default class CardCatelog extends Component {
   }
 
   render() {
+    const imageURL = 'https://image.tmdb.org/t/p/w500/';
     const allMovies = this.state.recentMovies.map( (movie) => {
-      return (<Card key={movie.id} movie={movie} />);
+      return <Card key={movie.id} movie={movie} />;
+      // <Slide src={`${imageURL}${movie.poster_path}`} />;
+      // (<Card key={movie.id} movie={movie} />);
     });
     return (
-      <div>
-        {allMovies}
+      <div className='CardCatelog'>
+        <ReactSiema>
+          {allMovies}
+        </ReactSiema>
       </div>
     );
   }
