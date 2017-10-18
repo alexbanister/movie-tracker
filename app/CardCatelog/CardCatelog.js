@@ -3,8 +3,7 @@ import { addTodo } from './CardCatelogActions';
 import React, { Component } from 'react';
 import { fetchRecentMovies } from '../API/movieDatabase';
 import Card from '../Card/Card';
-import ReactSiema from 'react-siema';
-// import Slide from '../Slide/Slide';
+import Slider from 'react-slick';
 
 export default class CardCatelog extends Component {
   constructor(){
@@ -23,18 +22,43 @@ export default class CardCatelog extends Component {
   }
 
   render() {
-    const imageURL = 'https://image.tmdb.org/t/p/w500/';
+    const options = {
+      dots: true,
+      infinite: false,
+      accessibility: true,
+      arrows: true,
+      variableWidth: false,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      focusOnSelect: true,
+      responsive: [{
+        breakpoint: 300, settings:
+          { slidesToShow: 1 }
+      }, {
+        breakpoint: 600, settings:
+          { slidesToShow: 2 }
+      }, {
+        breakpoint: 800, settings:
+          { slidesToShow: 2 }
+      }, {
+        breakpoint: 1000, settings:
+          { slidesToShow: 4 }
+      }, {
+        breakpoint: 1200, settings:
+          { slidesToShow: 5 }
+      }]
+    };
     const allMovies = this.state.recentMovies.map( (movie) => {
       return <Card key={movie.id} movie={movie} />;
-      // <Slide src={`${imageURL}${movie.poster_path}`} />;
-      // (<Card key={movie.id} movie={movie} />);
     });
-    return(
-      <div>
-      {allMovies}
-    </div>
-    )
-
+    return (
+      <div className='CardCatelog'>
+        <Slider {...options}>
+          {allMovies}
+        </Slider>
+      </div>
+    );
   }
 }
 

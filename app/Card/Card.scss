@@ -1,3 +1,20 @@
 .movieCard {
-  border: 1px solid #3ee33e;
+  position: relative;
+  display: inline-block;
+  height: 25em;
+  overflow: hidden;
+  outline: 1px solid black;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 1em;
+  .movieInfo {
+    width: 20vw;
+    padding: .5em;
+    color: white;
+    background: rgba(100, 100, 100, .5);
+  }
+  h2, h4 {
+    margin: 0;
+  }
 }
