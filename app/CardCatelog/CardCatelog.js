@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { fetchRecentMovies } from '../API/movieDatabase';
 import Card from '../Card/Card';
 import ReactSiema from 'react-siema';
-import Slide from '../Slide/Slide';
+// import Slide from '../Slide/Slide';
 
 export default class CardCatelog extends Component {
   constructor(){
@@ -29,15 +29,21 @@ export default class CardCatelog extends Component {
       // <Slide src={`${imageURL}${movie.poster_path}`} />;
       // (<Card key={movie.id} movie={movie} />);
     });
-    return (
-      <div className='CardCatelog'>
-        <ReactSiema>
-          {allMovies}
-        </ReactSiema>
-      </div>
-    );
+    return(
+      <div>
+      {allMovies}
+    </div>
+    )
+
   }
 }
+
+// return (
+//   <div className='CardCatelog'>
+//     <ReactSiema>
+//       {allMovies}
+//     </ReactSiema>
+//   </div>
 
 
 const mapStateToProps =  (store) => ({
