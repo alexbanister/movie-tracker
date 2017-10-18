@@ -5,7 +5,8 @@ export default class Login extends Component {
     super();
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      disabled: true
     };
   }
 
@@ -16,7 +17,8 @@ export default class Login extends Component {
 
   handleChange(field, event){
     this.setState({
-      [field]: event.target.value
+      [field]: event.target.value,
+      disabled: !this.state.email || !this.state.password
     });
   }
 
@@ -35,7 +37,7 @@ export default class Login extends Component {
           onChange={(event) => this.handleChange('password', event)}
           placeholder='Password'
         />
-        <input type='submit' />
+        <input type='submit' disabled={this.state.disabled} />
       </form>
     );
   }
