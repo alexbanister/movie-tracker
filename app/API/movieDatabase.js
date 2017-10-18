@@ -1,4 +1,4 @@
-import { movieDataBaseKey } from './apiKey';
+import { movieDataBaseKey }  from './apiKey';
 
 const  movieDataBaseURL = 'https://api.themoviedb.org/3/movie/';
 
