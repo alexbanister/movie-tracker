@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { userLogin } from '../API/User';
 
 export default class Login extends Component {
   constructor() {
@@ -12,7 +13,8 @@ export default class Login extends Component {
 
   handleLogin(event){
     event.preventDefault();
-    console.log('email', this.state.email);
+    userLogin(this.state.email, this.state.password);
+
   }
 
   handleChange(field, event){
