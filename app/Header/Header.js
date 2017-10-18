@@ -7,8 +7,11 @@ const Header = ()=>{
       <NavLink to='/' >Home</NavLink>
       <NavLink to='/favorites'>Favorites</NavLink>
       <NavLink to='/login'>Log In</NavLink>
+      <NavLink to='/signup'>Sign Up</NavLink>
     </header>
   );
 };
 
-export default Header;
+module.exports = {
+  Header
+};
