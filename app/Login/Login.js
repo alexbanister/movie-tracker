@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { userLogin } from '../API/User';
 import { connect } from 'react-redux';
 import { LoginAction } from './LoginAction';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
   constructor() {
@@ -47,6 +48,9 @@ class Login extends Component {
   }
 }
 
+Login.propTypes = {
+  loginAction: PropTypes.func
+};
 
 const mapStateToProps =  (store) => ({
   user: store.user
