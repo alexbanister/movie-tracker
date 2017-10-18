@@ -1,24 +1,15 @@
 import { connect } from 'react-redux';
-import { addTodo } from './CardCatelogActions';
 import React, { Component } from 'react';
 import { fetchRecentMovies } from '../API/movieDatabase';
 import Card from '../Card/Card';
 import Slider from 'react-slick';
+import { addRecentMovies, getFavorites } from './CardCatelogActions';
 
-export default class CardCatelog extends Component {
-  constructor(){
-    super();
-    this.state = {
-      recentMovies: []
-    };
-  }
-
+class CardCatelog extends Component {
   async componentDidMount() {
-    //set state
     const recentMovies = await fetchRecentMovies();
-    this.setState({
-      recentMovies: recentMovies
-    });
+    this.props.addRecentMovies(recentMovies);
+    this.props.getFavorites();
   }
 
   render() {
@@ -49,7 +40,7 @@ export default class CardCatelog extends Component {
           { slidesToShow: 5 }
       }]
     };
-    const allMovies = this.state.recentMovies.map( (movie) => {
+    const allMovies = this.props.recentMovies.map( (movie) => {
       return <Card key={movie.id} movie={movie} />;
     });
     return (
@@ -62,22 +53,14 @@ export default class CardCatelog extends Component {
   }
 }
 
-// return (
-//   <div className='CardCatelog'>
-//     <ReactSiema>
-//       {allMovies}
-//     </ReactSiema>
-//   </div>
-
-
 const mapStateToProps =  (store) => ({
-  todos: store.todos
+  recentMovies: store.recentMovies,
+  favoriteMovies: store.favoriteMovies
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSubmit: (text, id) => {
-    dispatch(addTodo(text, id));
-  }
+  addRecentMovies: ( recentMovies ) => { dispatch(addRecentMovies(recentMovies)); },
+  getFavorites: () => { dispatch(getFavorites()); }
 });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(CardCatelog);
+export default connect(mapStateToProps, mapDispatchToProps)(CardCatelog);
