@@ -9,7 +9,8 @@ export default class Login extends Component {
     };
   }
 
-  handleLogin(){
+  handleLogin(event){
+    event.preventDefault();
     console.log('email', this.state.email);
   }
 
@@ -21,17 +22,17 @@ export default class Login extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleLogin}>
+      <form onSubmit={(event) => this.handleLogin(event)}>
         <input
           type='email'
           value={this.state.email}
-          onChange={() => this.handleChange('email')}
+          onChange={(event) => this.handleChange('email', event)}
           placeholder='Email'
         />
         <input
           type='password'
           value={this.state.password}
-          onChange={() => this.handleChange('password')}
+          onChange={(event) => this.handleChange('password', event)}
           placeholder='Password'
         />
         <input type='submit' />
