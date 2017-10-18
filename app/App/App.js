@@ -15,7 +15,6 @@ export default class App extends Component {
       <Route exact path='/' component={CardCatelog} key='CardCatelog'/>,
       <Route exact path='/login' component={Login} key='login' />,
       <Route exact path='/signup' component={SignUp} key='signup' />
-
     ]);
   }
 }
