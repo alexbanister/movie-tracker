@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CardCatelog from '../CardCatelog/CardCatelog';
-import { Header } from '../Header/Header';
+import Header from '../Header/Header';
 import { Route } from 'react-router-dom';
 import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';

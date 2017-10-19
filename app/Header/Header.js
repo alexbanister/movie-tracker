@@ -1,7 +1,9 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logOutAction } from './HeaderAction.js';
 
-const Header = ()=>{
+const Header = (props)=>{
   return (
     <header>
       <div className='auth-links'>
@@ -11,10 +13,19 @@ const Header = ()=>{
       <h1>Movie<strong>Tracker</strong></h1>
       <NavLink to='/' className='main-nav'>Home</NavLink>
       <NavLink to='/favorites' className='main-nav'>Favorites</NavLink>
+      <NavLink to='/' onClick={props.logOutAction}>Log Out</NavLink>
     </header>
   );
 };
 
-module.exports = {
-  Header
-};
+const mapStateToProps = (store) => ({
+  user: store.user
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logOutAction: () => {
+    dispatch(logOutAction());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
