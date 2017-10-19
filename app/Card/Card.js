@@ -9,6 +9,7 @@ const Card = ({ movie, addFavoriteMovie }) => {
   const handleAddFavorite = () => {
     addFavoriteMovie(movie)
   }
+  
   return (
     <span className='movieCardContainer'>
       <div className='movieCard' style={backgroundImage}>

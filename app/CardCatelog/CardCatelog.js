@@ -15,21 +15,21 @@ class CardCatelog extends Component {
   async componentDidMount() {
     const recentMovies = await fetchRecentMovies();
     this.props.addRecentMovies(recentMovies);
-    this.props.getFavorites();
+    // this.props.getFavorites();
   }
 
   async addFavoriteMovie(movie) {
-    console.log(movie);
-    const favoriteMovie = {
+    const favoriteMovieForFetch = {
         movie_id: movie.id,
         title: movie.title,
         poster_path: movie.poster_path,
         release_date: movie.release_date,
         vote_average: movie.vote_average,
         overview: movie.overview,
-      user_id: this.props.user.id
+        user_id: this.props.user.id
     };
-    const movieReturn = await addFavoriteFetch(favoriteMovie);
+    const movieReturn = await addFavoriteFetch(favoriteMovieForFetch);
+    this.props.addFavorite(movie);
   }
 
   render() {
@@ -59,8 +59,8 @@ class CardCatelog extends Component {
       }]
     };
 
-    const allMovies = this.props.recentMovies.map( (movie) => {
-      return (<Card key={movie.id}
+    const allMovies = this.props.recentMovies.map( (movie, index) => {
+      return (<Card key={index }
         movie={movie}
         addFavoriteMovie={this.addFavoriteMovie.bind(this)} />);
     });
@@ -79,7 +79,8 @@ class CardCatelog extends Component {
 CardCatelog.propTypes = {
   recentMovies: PropTypes.array,
   addRecentMovies: PropTypes.func,
-  getFavorites: PropTypes.func
+  getFavorites: PropTypes.func,
+  favoriteMovie: PropTypes.func
 };
 
 const mapStateToProps =  (store) => ({
