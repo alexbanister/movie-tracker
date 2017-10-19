@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import CardCatelog from '../CardCatelog/CardCatelog';
-
 import { Header } from '../Header/Header';
 import { Route } from 'react-router-dom';
 import Login from '../Login/Login';
 import { SignUp } from '../SignUp/SignUp';
 
-
 export default class App extends Component {
-
   render() {
     return ([
       <Route path='/' component={Header} key='header'/>,

@@ -8,13 +8,10 @@ const Header = ()=>{
       <NavLink to='/favorites'>Favorites</NavLink>
       <NavLink to='/login'>Log In</NavLink>
       <NavLink to='/signup'>Sign Up</NavLink>
-
     </header>
   );
 };
 
-
 module.exports = {
   Header
 };
-
