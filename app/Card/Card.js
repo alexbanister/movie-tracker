@@ -7,18 +7,9 @@ const Card = ({ movie, addFavoriteMovie }) => {
   };
 
   const handleAddFavorite = () => {
-<<<<<<< HEAD
     addFavoriteMovie(movie);
   };
-  
-||||||| merged common ancestors
-    addFavoriteMovie(movie)
-  }
-=======
-    addFavoriteMovie(movie)
-  }
-  
->>>>>>> 2ccc02e5a91e0cd87042e4076b154abce977664d
+
   return (
     <span className='movieCardContainer'>
       <div className='movieCard' style={backgroundImage}>
