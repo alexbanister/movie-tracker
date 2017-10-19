@@ -8,7 +8,9 @@ class SignUp extends Component {
     this.state ={
       name: '',
       email: '',
-      password: ''
+      password: '',
+      disabled: true,
+      signUpError: false
     };
   }
 
@@ -19,20 +21,22 @@ class SignUp extends Component {
       console.log(userData);
     } else {
       this.setState({
-        loginError: true
+        sitnUpError: true
       });
     }
   }
 
   handleChange(field, event){
     this.setState({
-      [field]: event.target.value
+      [field]: event.target.value,
+      disabled: !this.state.email || !this.state.password || !this.state.name
     });
   }
 
   render() {
     return (
       <form onSubmit={(event) => this.handleSignUp(event)}>
+
         <input
           type='text'
           placeholder='Name'
@@ -48,7 +52,8 @@ class SignUp extends Component {
           placeholder='Password'
           onChange={(event) => this.handleChange('password', event)}
         />
-        <input type='submit' />
+        <input type='submit'
+          disabled={this.state.disabled}/>
       </form>
     );
   }
