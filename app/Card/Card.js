@@ -7,8 +7,9 @@ const Card = ({ movie, addFavoriteMovie }) => {
   };
 
   const handleAddFavorite = () => {
-    addFavoriteMovie(movie)
-  }
+    addFavoriteMovie(movie);
+  };
+  
   return (
     <span className='movieCardContainer'>
       <div className='movieCard' style={backgroundImage}>
@@ -25,6 +26,7 @@ const Card = ({ movie, addFavoriteMovie }) => {
 };
 
 Card.propTypes = {
-  movie: PropTypes.object
+  movie: PropTypes.object,
+  addFavoriteMovie: PropTypes.func
 };
 export default Card;
