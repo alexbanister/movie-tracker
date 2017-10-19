@@ -11,7 +11,8 @@ export const favoriteMovies = (store = [], action) => {
   switch (action.type) {
   case 'GET_FAVORITES':
     return store;
-  case 'ADD_FAVORITES':
+  case 'ADD_FAVORITE':
+  console.log('hi john');
     return [...store, action.favMov];
   default:
     return store;
