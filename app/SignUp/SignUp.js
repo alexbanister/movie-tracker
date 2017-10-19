@@ -13,20 +13,37 @@ class SignUp extends Component {
       password: '',
       retypePassword: '',
       disabled: true,
-      signUpError: false
+      signUpError: false,
+      passwordValidationError: false
     };
   }
 
   async handleSignUp(event){
-
     event.preventDefault();
-    const newUserData = await userSignUp(
-      this.state.email,
-      this.state.password,
-      this.state.name
-    );
+    this.logInNewUser( await this.createUser());
+  }
 
+  async cerateUser(){
+    console.log('click');
+    if (this.state.password === this.state.retypePassword){
+      console.log('validation if');
+      const newUserData = await userSignUp(
+        this.state.email,
+        this.state.password,
+        this.state.name
+      );
+      return newUserData;
+    } else {
+      this.setState({
+        passwordValidationError: true
+      });
+    }
+  }
+
+  async logInNewUser(newUserData){
+    console.log(newUserData);
     if (newUserData.status === 'success') {
+      console.log('logIn if');
       const userData = await userLogin(this.state.email, this.state.password);
       this.props.loginAction(userData.data);
     } else {
@@ -35,8 +52,6 @@ class SignUp extends Component {
       });
     }
   }
-
-  
 
   handleChange(field, event){
     this.setState({
@@ -48,6 +63,10 @@ class SignUp extends Component {
   render() {
     return (
       <form onSubmit={(event) => this.handleSignUp(event)}>
+        {
+          this.state.passwordValidationError &&
+          <h2>Passwords do not match.</h2>
+        }
         {
           this.state.singUpError &&
           <h2>You Failed</h2>
