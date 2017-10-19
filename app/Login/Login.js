@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
+import { userLogin } from '../API/User';
+import { connect } from 'react-redux';
+import { LoginAction } from './LoginAction';
+import PropTypes from 'prop-types';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
+      email: 'tman2272@aol.com',
+      password: 'password',
       disabled: true
     };
   }
 
-  handleLogin(event){
+  async handleLogin(event){
     event.preventDefault();
-    console.log('email', this.state.email);
+    const userData = await userLogin(this.state.email, this.state.password);
+    this.props.loginAction(userData.data);
   }
 
   handleChange(field, event){
@@ -42,3 +47,17 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  loginAction: PropTypes.func
+};
+
+const mapStateToProps =  (store) => ({
+  user: store.user
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginAction: ( user ) => { dispatch(LoginAction(user)); }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -25,6 +25,7 @@
     "express-cors": "0.0.3",
     "history": "^4.6.3",
     "pg-promise": "^3.2.3",
+    "prop-types": "^15.6.0",
     "raf": "^3.4.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

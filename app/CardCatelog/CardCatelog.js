@@ -4,6 +4,7 @@ import { fetchRecentMovies } from '../API/movieDatabase';
 import Card from '../Card/Card';
 import Slider from 'react-slick';
 import { addRecentMovies, getFavorites } from './CardCatelogActions';
+import PropTypes from 'prop-types';
 
 class CardCatelog extends Component {
   async componentDidMount() {
@@ -40,6 +41,7 @@ class CardCatelog extends Component {
           { slidesToShow: 5 }
       }]
     };
+
     const allMovies = this.props.recentMovies.map( (movie) => {
       return <Card key={movie.id} movie={movie} />;
     });
@@ -53,13 +55,21 @@ class CardCatelog extends Component {
   }
 }
 
+CardCatelog.propTypes = {
+  recentMovies: PropTypes.array,
+  addRecentMovies: PropTypes.func,
+  getFavorites: PropTypes.func
+};
+
 const mapStateToProps =  (store) => ({
   recentMovies: store.recentMovies,
   favoriteMovies: store.favoriteMovies
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addRecentMovies: ( recentMovies ) => { dispatch(addRecentMovies(recentMovies)); },
+  addRecentMovies: ( recentMovies ) => {
+    dispatch(addRecentMovies(recentMovies));
+  },
   getFavorites: () => { dispatch(getFavorites()); }
 });
 
