@@ -23,10 +23,10 @@ class SignUp extends Component {
     this.logInNewUser( await this.createUser());
   }
 
-  async cerateUser(){
+  async createUser(){
     console.log('click');
     if (this.state.password === this.state.retypePassword){
-      console.log('validation if');
+      console.log('create if');
       const newUserData = await userSignUp(
         this.state.email,
         this.state.password,
@@ -47,6 +47,7 @@ class SignUp extends Component {
       const userData = await userLogin(this.state.email, this.state.password);
       this.props.loginAction(userData.data);
     } else {
+      console.log('login else');
       this.setState({
         signUpError: true
       });
@@ -68,8 +69,8 @@ class SignUp extends Component {
           <h2>Passwords do not match.</h2>
         }
         {
-          this.state.singUpError &&
-          <h2>You Failed</h2>
+          this.state.signUpError &&
+          <h2>Password Already Exists</h2>
         }
         {
           this.props.user.id &&

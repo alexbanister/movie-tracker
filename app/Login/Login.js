@@ -40,7 +40,7 @@ class Login extends Component {
       <form onSubmit={(event) => this.handleLogin(event)}>
         {
           this.state.loginError &&
-          <h2>You Failed</h2>
+          <h2>Email and Password Do Not Match</h2>
         }
         {
           this.props.user.id &&
