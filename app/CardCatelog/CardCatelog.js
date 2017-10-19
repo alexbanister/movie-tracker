@@ -3,7 +3,11 @@ import React, { Component } from 'react';
 import { fetchRecentMovies } from '../API/movieDatabase';
 import Card from '../Card/Card';
 import Slider from 'react-slick';
-import { addRecentMovies, getFavorites } from './CardCatelogActions';
+import {
+  addRecentMovies,
+  getFavorites,
+  addFavorite
+} from './CardCatelogActions';
 import PropTypes from 'prop-types';
 
 class CardCatelog extends Component {
@@ -12,6 +16,14 @@ class CardCatelog extends Component {
     this.props.addRecentMovies(recentMovies);
     this.props.getFavorites();
   }
+
+  addFavorite(movie) {
+    const payload = {
+      ...movie,
+      user
+    }
+  }
+
   render() {
     const options = {
       infinite: false,
@@ -69,7 +81,8 @@ const mapDispatchToProps = (dispatch) => ({
   addRecentMovies: ( recentMovies ) => {
     dispatch(addRecentMovies(recentMovies));
   },
-  getFavorites: () => { dispatch(getFavorites()); }
+  getFavorites: () => { dispatch(getFavorites()); },
+  addFavorite: (favMov) => { dispatch(addFavorite(favMov)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardCatelog);

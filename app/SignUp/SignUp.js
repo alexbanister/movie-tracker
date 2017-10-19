@@ -12,8 +12,8 @@ class SignUp extends Component {
       email: '',
       password: '',
       retypePassword: '',
-      disabled: true,
       signUpError: false,
+      disabled: true,
       passwordValidationError: false
     };
   }
