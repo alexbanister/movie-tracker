@@ -1,0 +1,42 @@
+@import "./assets/variables.scss";
+
+header {
+  @include linear-gradient($brand-blue, $dark-blue);
+  padding: .5em;
+  text-align: center;
+  border-bottom: 2px solid $dark-grey;
+  h1{
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0  0 .5em 0;
+  }
+  strong {
+    color: $highlight;
+  }
+  .auth-links {
+    text-align: right;
+    a {
+      color: $off-white;
+      padding: 0 .5em;
+      &:hover {
+        color: $highlight;
+      }
+    }
+    .active {
+      color: $light-blue;
+      font-weight: bold;
+    }
+  }
+  .main-nav {
+    font-size: 1.5em;
+    color: $off-white;
+    padding: 0 .5em;
+    &:hover {
+      color: $highlight;
+    }
+  }
+  .active {
+    color: $dark-blue;
+    font-weight: bold;
+  }
+}

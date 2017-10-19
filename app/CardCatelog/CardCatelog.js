@@ -15,7 +15,6 @@ class CardCatelog extends Component {
 
   render() {
     const options = {
-      dots: true,
       infinite: false,
       accessibility: true,
       arrows: true,
