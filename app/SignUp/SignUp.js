@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { userSignUp } from '../API/User';
+import { userSignUp, userLogin } from '../API/User';
+import { LoginAction } from '../Login/LoginAction';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class SignUp extends Component {
   constructor() {
@@ -8,36 +11,71 @@ class SignUp extends Component {
       name: '',
       email: '',
       password: '',
-      retypePassword: ''
+      retypePassword: '',
+      disabled: true,
+      signUpError: false,
+      passwordValidationError: false
     };
   }
 
   async handleSignUp(event){
     event.preventDefault();
-    const userData = await userSignUp(
-      this.state.email,
-      this.state.password,
-      this.state.name
-    );
+    this.logInNewUser( await this.createUser());
+  }
 
-    if (userData) {
-      console.log(userData);
+  async createUser(){
+    console.log('click');
+    if (this.state.password === this.state.retypePassword){
+      console.log('create if');
+      const newUserData = await userSignUp(
+        this.state.email,
+        this.state.password,
+        this.state.name
+      );
+      return newUserData;
     } else {
       this.setState({
-        loginError: true
+        passwordValidationError: true
+      });
+    }
+  }
+
+  async logInNewUser(newUserData){
+    console.log(newUserData);
+    if (newUserData.status === 'success') {
+      console.log('logIn if');
+      const userData = await userLogin(this.state.email, this.state.password);
+      this.props.loginAction(userData.data);
+    } else {
+      console.log('login else');
+      this.setState({
+        signUpError: true
       });
     }
   }
 
   handleChange(field, event){
     this.setState({
-      [field]: event.target.value
+      [field]: event.target.value,
+      disabled: !this.state.email || !this.state.password || !this.state.name
     });
   }
 
   render() {
     return (
       <form onSubmit={(event) => this.handleSignUp(event)}>
+        {
+          this.state.passwordValidationError &&
+          <h2>Passwords do not match.</h2>
+        }
+        {
+          this.state.signUpError &&
+          <h2>Password Already Exists</h2>
+        }
+        {
+          this.props.user.id &&
+          <Redirect to="/" />
+        }
         <input
           type='text'
           placeholder='Name'
@@ -54,16 +92,23 @@ class SignUp extends Component {
           onChange={(event) => this.handleChange('password', event)}
         />
         <input
-          type='retypePassword'
+          type='password'
           placeholder='Please Retype Password'
           onChange={(event) => this.handleChange('retypePassword', event)}
         />
-        <input type='submit' />
+        <input type='submit'
+          disabled={this.state.disabled}/>
       </form>
     );
   }
 }
 
-module.exports = {
-  SignUp
-};
+const mapStateToProps =  (store) => ({
+  user: store.user
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginAction: ( user ) => { dispatch(LoginAction(user)); }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
