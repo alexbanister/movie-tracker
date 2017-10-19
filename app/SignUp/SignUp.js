@@ -3,20 +3,26 @@ import { userSignUp } from '../API/User';
 
 class SignUp extends Component {
   constructor() {
-    console.log(userSignUp);
     super();
     this.state ={
       name: '',
       email: '',
       password: '',
+      retypePassword: '',
       disabled: true,
-      signUpError: false
+      signUpError: false,
+
     };
   }
 
   async handleSignUp(event){
     event.preventDefault();
-    const userData = await userSignUp(this.state.email, this.state.password, this.state.name);
+    const userData = await userSignUp(
+      this.state.email,
+      this.state.password,
+      this.state.name
+    );
+
     if (userData) {
       console.log(userData);
     } else {
@@ -51,6 +57,11 @@ class SignUp extends Component {
           type='password'
           placeholder='Password'
           onChange={(event) => this.handleChange('password', event)}
+        />
+        <input
+          type='retypePassword'
+          placeholder='Please Retype Password'
+          onChange={(event) => this.handleChange('retypePassword', event)}
         />
         <input type='submit'
           disabled={this.state.disabled}/>
