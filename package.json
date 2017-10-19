@@ -28,15 +28,14 @@
     "prop-types": "^15.6.0",
     "raf": "^3.4.0",
     "react": "^16.0.0",
+    "react-coverflow-themillhousegroup": "^0.3.3",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.2",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
-    "react-siema": "^1.0.1",
     "react-slick": "^0.15.4",
     "redux": "^3.7.2",
-    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

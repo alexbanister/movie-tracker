@@ -12,7 +12,6 @@ class CardCatelog extends Component {
     this.props.addRecentMovies(recentMovies);
     this.props.getFavorites();
   }
-
   render() {
     const options = {
       infinite: false,
@@ -20,7 +19,7 @@ class CardCatelog extends Component {
       arrows: true,
       variableWidth: false,
       slidesToShow: 4,
-      slidesToScroll: 1,
+      slidesToScroll: 4,
       focusOnSelect: true,
       responsive: [{
         breakpoint: 300, settings:
@@ -45,9 +44,11 @@ class CardCatelog extends Component {
     });
     return (
       <div className='CardCatelog'>
-        <Slider {...options}>
-          {allMovies}
-        </Slider>
+        <div className='slider'>
+          <Slider {...options}>
+            {allMovies}
+          </Slider>
+        </div>
       </div>
     );
   }

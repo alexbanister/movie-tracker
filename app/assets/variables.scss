@@ -4,6 +4,7 @@ $brand-blue: #3E7CB1;
 $dark-blue: #054A91;
 $light-blue: #81A4CD;
 $highlight: #F17300;
+$transparent: rgba(0, 0, 0, 0);
 
 
 $shadow: 5px 5px 25px $dark-grey;
@@ -23,4 +24,12 @@ $glow: 0 0 15px $highlight;
   background: -webkit-linear-gradient(top, $color1 0%, $color2 100%);
   background: linear-gradient(to bottom, $color1 0%, $color2 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=0 );
+}
+
+@mixin side-gradient($color2, $color1) {
+  background: $color1;
+  background: -moz-linear-gradient(left, $color1 0%, $color2 100%);
+  background: -webkit-linear-gradient(left, $color1 0%, $color2 100%);
+  background: linear-gradient(to right, $color1 0%, $color2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=1 );
 }

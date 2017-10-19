@@ -5,10 +5,12 @@ const Card = ({ movie }) => {
     backgroundImage: `url(https://image.tmdb.org/t/p/w500/${movie.poster_path})`
   };
   return (
-    <span className='movieCard' style={backgroundImage}>
-      <div className='movieInfo'>
-        <h2>{movie.title}</h2>
-        <h4>{movie.release_date}</h4>
+    <span className='movieCardContainer'>
+      <div className='movieCard' style={backgroundImage}>
+        <div className='movieInfo'>
+          <h2>{movie.title}</h2>
+          <h4>{movie.release_date}</h4>
+        </div>
       </div>
     </span>
   );
