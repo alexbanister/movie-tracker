@@ -52,7 +52,7 @@ function addFavorite(req, res, next) {
   .then(function(data) {
     res.status(200).json({ status: 'success', message: "Movie was added to favorites", id: data.id});
   }).catch(function(err) {
-    next(err);
+    res.status(535).json({status: 'failed', error: err.message});
   })
 }
 

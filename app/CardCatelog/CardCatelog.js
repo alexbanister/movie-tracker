@@ -9,6 +9,7 @@ import {
   addFavorite
 } from './CardCatelogActions';
 import PropTypes from 'prop-types';
+import { addFavoriteFetch } from '../API/User';
 
 class CardCatelog extends Component {
   async componentDidMount() {
@@ -17,11 +18,18 @@ class CardCatelog extends Component {
     this.props.getFavorites();
   }
 
-  addFavorite(movie) {
-    const payload = {
-      ...movie,
-      user
-    }
+  async addFavoriteMovie(movie) {
+    console.log(movie);
+    const favoriteMovie = {
+        movie_id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+        release_date: movie.release_date,
+        vote_average: movie.vote_average,
+        overview: movie.overview,
+      user_id: this.props.user.id
+    };
+    const movieReturn = await addFavoriteFetch(favoriteMovie);
   }
 
   render() {
@@ -52,7 +60,9 @@ class CardCatelog extends Component {
     };
 
     const allMovies = this.props.recentMovies.map( (movie) => {
-      return <Card key={movie.id} movie={movie} />;
+      return (<Card key={movie.id}
+        movie={movie}
+        addFavoriteMovie={this.addFavoriteMovie.bind(this)} />);
     });
     return (
       <div className='CardCatelog'>
@@ -74,7 +84,8 @@ CardCatelog.propTypes = {
 
 const mapStateToProps =  (store) => ({
   recentMovies: store.recentMovies,
-  favoriteMovies: store.favoriteMovies
+  favoriteMovies: store.favoriteMovies,
+  user: store.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
