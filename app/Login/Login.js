@@ -3,6 +3,7 @@ import { userLogin } from '../API/User';
 import { connect } from 'react-redux';
 import { LoginAction } from './LoginAction';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
   constructor() {
@@ -10,14 +11,21 @@ class Login extends Component {
     this.state = {
       email: 'tman2272@aol.com',
       password: 'password',
-      disabled: true
+      disabled: true,
+      loginError: false
     };
   }
 
   async handleLogin(event){
     event.preventDefault();
     const userData = await userLogin(this.state.email, this.state.password);
-    this.props.loginAction(userData.data);
+    if (userData.data) {
+      this.props.loginAction(userData.data);
+    } else {
+      this.setState({
+        loginError: true
+      });
+    }
   }
 
   handleChange(field, event){
@@ -30,6 +38,14 @@ class Login extends Component {
   render() {
     return (
       <form onSubmit={(event) => this.handleLogin(event)}>
+        {
+          this.state.loginError &&
+          <h2>You Failed</h2>
+        }
+        {
+          this.props.user.id &&
+          <Redirect to="/" />
+        }
         <input
           type='email'
           value={this.state.email}
@@ -49,7 +65,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  loginAction: PropTypes.func
+  loginAction: PropTypes.func,
+  user: PropTypes.object
 };
 
 const mapStateToProps =  (store) => ({
