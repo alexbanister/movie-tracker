@@ -2,20 +2,34 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOutAction } from './HeaderAction.js';
+import PropTypes from 'prop-types';
 
 const Header = (props)=>{
   return (
     <header>
-      <div className='auth-links'>
-        <NavLink to='/login'>Log In</NavLink>
-        <NavLink to='/signup'>Sign Up</NavLink>
-      </div>
+      {
+        !props.user.id &&
+          <div className='auth-links'>
+            <NavLink to='/login'>Log In</NavLink>
+            <NavLink to='/signup'>Sign Up</NavLink>
+          </div>
+      }
+      {
+        props.user.id &&
+        <div className='auth-links'>
+          <NavLink to='/' onClick={props.logOutAction}>Log Out</NavLink>
+        </div>
+      }
       <h1>Movie<strong>Tracker</strong></h1>
       <NavLink to='/' className='main-nav'>Home</NavLink>
       <NavLink to='/favorites' className='main-nav'>Favorites</NavLink>
-      <NavLink to='/' onClick={props.logOutAction}>Log Out</NavLink>
     </header>
   );
+};
+
+Header.propTypes = {
+  logOutAction: PropTypes.func,
+  user: PropTypes.object
 };
 
 const mapStateToProps = (store) => ({
