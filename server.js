@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 const port = (process.env.PORT || 3000);
 const app = express();
 const users = require('./routes/usersApi');
+const open = require('open')
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,3 +36,5 @@ app.get('/*', function (req, res) { res.sendFile(path.join(__dirname, '/index.ht
 app.listen(port);
 
 console.log(`Listening at http://localhost:${port}`);
+
+open(`http://localhost:${port}`);
