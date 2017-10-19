@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { userSignUp } from '../API/User';
+import { userSignUp, userLogin } from '../API/User';
+import { LoginAction } from '../Login/LoginAction';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class SignUp extends Component {
   constructor() {
@@ -10,27 +13,30 @@ class SignUp extends Component {
       password: '',
       retypePassword: '',
       disabled: true,
-      signUpError: false,
-
+      signUpError: false
     };
   }
 
   async handleSignUp(event){
+
     event.preventDefault();
-    const userData = await userSignUp(
+    const newUserData = await userSignUp(
       this.state.email,
       this.state.password,
       this.state.name
     );
 
-    if (userData) {
-      console.log(userData);
+    if (newUserData.status === 'success') {
+      const userData = await userLogin(this.state.email, this.state.password);
+      this.props.loginAction(userData.data);
     } else {
       this.setState({
-        sitnUpError: true
+        signUpError: true
       });
     }
   }
+
+  
 
   handleChange(field, event){
     this.setState({
@@ -42,7 +48,14 @@ class SignUp extends Component {
   render() {
     return (
       <form onSubmit={(event) => this.handleSignUp(event)}>
-
+        {
+          this.state.singUpError &&
+          <h2>You Failed</h2>
+        }
+        {
+          this.props.user.id &&
+          <Redirect to="/" />
+        }
         <input
           type='text'
           placeholder='Name'
@@ -59,7 +72,7 @@ class SignUp extends Component {
           onChange={(event) => this.handleChange('password', event)}
         />
         <input
-          type='retypePassword'
+          type='password'
           placeholder='Please Retype Password'
           onChange={(event) => this.handleChange('retypePassword', event)}
         />
@@ -70,6 +83,12 @@ class SignUp extends Component {
   }
 }
 
-module.exports = {
-  SignUp
-};
+const mapStateToProps =  (store) => ({
+  user: store.user
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginAction: ( user ) => { dispatch(LoginAction(user)); }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
