@@ -1,4 +1,20 @@
-.CardCatelog{
-  width: 90vw;
-  overflow: hidden;
+.CardCatelog {
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .slider{
+    width: 90vw;
+    overflow: hidden;
+  }
+  .slick-slider {
+    display: flex;
+    flex-direction: row;
+  }
+  button {
+    font-size: 1em;
+    background: $light-blue;
+    color: $off-white;
+    border: none;
+  }
 }

@@ -1,18 +1,21 @@
-.movieCard {
-  position: relative;
+.movieCardContainer {
   display: inline-block;
   height: 25em;
-  overflow: hidden;
-  outline: 1px solid black;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin: 1em;
+  .movieCard {
+    margin: 1em;
+    height: 25em;
+    outline: 1px solid black;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
   .movieInfo {
     width: 20vw;
     padding: .5em;
-    color: white;
-    background: rgba(100, 100, 100, .5);
+    padding-bottom: 1.5em;
+    color: $off-white;
+    @include linear-gradient($transparent, $dark-grey);
   }
   h2, h4 {
     margin: 0;
