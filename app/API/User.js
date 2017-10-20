@@ -27,14 +27,14 @@ const addFavoriteFetch = (favMov) => {
     headers: {'Content-Type': 'application/json'}
   })
     .then(response => response.json())
-    .then(jr => console.log(jr))
+    .then(jr => jr)
     .catch(error => console.log(error.json()));
 };
 
 const fetchFavorites = (id) => {
   return fetch(`/api/users/${id}/favorites`)
     .then(response => response.json())
-    .then(jr => console.log(jr));
+    .then(jr => jr);
 };
 
 module.exports = {
