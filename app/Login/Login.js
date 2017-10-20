@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { userLogin } from '../API/User';
+import { userLogin, fetchFavorites } from '../API/User';
 import { connect } from 'react-redux';
 import { LoginAction } from './LoginAction';
 import PropTypes from 'prop-types';
@@ -17,9 +17,12 @@ class Login extends Component {
   }
 
   async handleLogin(event){
+    // this.userFavorites();
     event.preventDefault();
+    const savedFavorites = await fetchFavorites(1);
     const userData = await userLogin(this.state.email, this.state.password);
     if (userData.data) {
+      console.log(userData.data);
       this.props.loginAction(userData.data);
     } else {
       this.setState({
@@ -27,6 +30,10 @@ class Login extends Component {
       });
     }
   }
+
+  // async userFavorites() {
+  //   const savedFavorites = await fetchFavorites(1);
+  // }
 
   handleChange(field, event){
     this.setState({
