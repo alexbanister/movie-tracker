@@ -9,66 +9,64 @@ import {
   addFavorite
 } from './CardCatelogActions';
 import PropTypes from 'prop-types';
-import { addFavoriteFetch } from '../API/User';
+import { addFavoriteFetch, fetchFavorites } from '../API/User';
+import sliderOptions from './sliderOptions';
 
 class CardCatelog extends Component {
   async componentDidMount() {
     const recentMovies = await fetchRecentMovies();
     this.props.addRecentMovies(recentMovies);
-    // this.props.getFavorites();
+    if (this.props.user.id) {
+      this.getUserFavorites();
+    }
   }
 
   async addFavoriteMovie(movie) {
     const favoriteMovieForFetch = {
-        movie_id: movie.id,
-        title: movie.title,
-        poster_path: movie.poster_path,
-        release_date: movie.release_date,
-        vote_average: movie.vote_average,
-        overview: movie.overview,
-        user_id: this.props.user.id
+      movie_id: movie.id,
+      title: movie.title,
+      poster_path: movie.poster_path,
+      release_date: movie.release_date,
+      vote_average: movie.vote_average,
+      overview: movie.overview,
+      user_id: this.props.user.id
     };
-    const movieReturn = await addFavoriteFetch(favoriteMovieForFetch);
+    await addFavoriteFetch(favoriteMovieForFetch);
     this.props.addFavorite(movie);
   }
 
-  render() {
-    const options = {
-      infinite: false,
-      accessibility: true,
-      arrows: true,
-      variableWidth: false,
-      slidesToShow: 4,
-      slidesToScroll: 4,
-      focusOnSelect: true,
-      responsive: [{
-        breakpoint: 300, settings:
-          { slidesToShow: 1 }
-      }, {
-        breakpoint: 600, settings:
-          { slidesToShow: 2 }
-      }, {
-        breakpoint: 800, settings:
-          { slidesToShow: 2 }
-      }, {
-        breakpoint: 1000, settings:
-          { slidesToShow: 4 }
-      }, {
-        breakpoint: 1200, settings:
-          { slidesToShow: 5 }
-      }]
-    };
+  async getUserFavorites() {
+    const savedFavorites = await fetchFavorites(this.props.user.id);
+    this.props.getFavorites(savedFavorites.data);
+  }
 
-    const allMovies = this.props.recentMovies.map( (movie, index) => {
-      return (<Card key={index }
+  buildCards() {
+    return this.props.recentMovies.map( (movie, index) => {
+      let clickAction=this.addFavoriteMovie.bind(this);
+      let cardStyle='';
+      let favoriteText='Add to Favorites';
+      const isFavorite = this.props.favoriteMovies.find( fav => (
+        fav.movie_id === movie.id
+      ));
+      if (isFavorite) {
+        clickAction=this.addFavoriteMovie.bind(this);
+        cardStyle='isFavorite';
+        favoriteText='Remove from Favorites';
+      }
+      return (<Card key={index}
         movie={movie}
-        addFavoriteMovie={this.addFavoriteMovie.bind(this)} />);
+        cardStyle={cardStyle}
+        favoriteText={favoriteText}
+        clickAction={clickAction} />);
     });
+  }
+
+  render() {
     return (
       <div className='CardCatelog'>
         <div className='slider'>
-          <Slider {...options}>
-            {allMovies}
+          <Slider {...sliderOptions}>
+            {this.buildCards()}
           </Slider>
         </div>
       </div>
@@ -81,7 +79,8 @@ CardCatelog.propTypes = {
   addRecentMovies: PropTypes.func,
   user: PropTypes.object,
   getFavorites: PropTypes.func,
-  favoriteMovie: PropTypes.func
+  favoriteMovies: PropTypes.array,
+  addFavorite: PropTypes.func
 };
 
 const mapStateToProps =  (store) => ({
@@ -94,7 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
   addRecentMovies: ( recentMovies ) => {
     dispatch(addRecentMovies(recentMovies));
   },
-  getFavorites: () => { dispatch(getFavorites()); },
+  getFavorites: (favoriteMovies) => { dispatch(getFavorites(favoriteMovies)); },
   addFavorite: (favMov) => { dispatch(addFavorite(favMov)); }
 });
 
