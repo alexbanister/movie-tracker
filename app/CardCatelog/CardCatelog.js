@@ -9,14 +9,21 @@ import {
   addFavorite
 } from './CardCatelogActions';
 import PropTypes from 'prop-types';
-import { addFavoriteFetch } from '../API/User';
+import { addFavoriteFetch, fetchFavorites } from '../API/User';
 import sliderOptions from './sliderOptions';
 
 class CardCatelog extends Component {
   async componentDidMount() {
+    console.log('mounting');
     const recentMovies = await fetchRecentMovies();
     this.props.addRecentMovies(recentMovies);
-    // this.props.getFavorites();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user.id) {
+      console.log('got props');
+      this.getUserFavorites();
+    }
   }
 
   async addFavoriteMovie(movie) {
@@ -31,6 +38,11 @@ class CardCatelog extends Component {
     };
     const movieReturn = await addFavoriteFetch(favoriteMovieForFetch);
     this.props.addFavorite(movie);
+  }
+
+  async getUserFavorites() {
+    const savedFavorites = await fetchFavorites(this.props.user.id);
+    this.props.getFavorites(savedFavorites.data);
   }
 
   render() {
@@ -69,7 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
   addRecentMovies: ( recentMovies ) => {
     dispatch(addRecentMovies(recentMovies));
   },
-  getFavorites: () => { dispatch(getFavorites()); },
+  getFavorites: (favoriteMovies) => { dispatch(getFavorites(favoriteMovies)); },
   addFavorite: (favMov) => { dispatch(addFavorite(favMov)); }
 });
 

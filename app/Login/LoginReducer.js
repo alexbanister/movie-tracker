@@ -8,12 +8,3 @@ export const user = (store = {}, action) => {
     return store;
   }
 };
-
-export const favorites =(store = [], action) => {
-  switch (action.type) {
-  case 'GET_FAVORITES':
-    return action.favoriteMovies;
-  default:
-    return store;
-  }
-};

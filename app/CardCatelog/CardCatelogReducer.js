@@ -1,7 +1,7 @@
 export const recentMovies = (store = [], action) => {
   switch (action.type) {
   case 'ADD_RECENT_MOVIES':
-    return [...store, ...action.recentMovies];
+    return [...action.recentMovies];
   default:
     return store;
   }
@@ -10,7 +10,7 @@ export const recentMovies = (store = [], action) => {
 export const favoriteMovies = (store = [], action) => {
   switch (action.type) {
   case 'GET_FAVORITES':
-    return store;
+    return [...action.favoriteMovies];
   case 'ADD_FAVORITE':
     return [...store, action.favMov];
   default:

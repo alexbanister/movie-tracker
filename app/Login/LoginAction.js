@@ -4,10 +4,3 @@ export const LoginAction = (user) => {
     user
   };
 };
-
-export const getFavorites = (favoriteMovies) => {
-  return {
-    type: 'GET_FAVORITES',
-    favoriteMovies
-  };
-};

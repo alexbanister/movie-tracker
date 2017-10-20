@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { userLogin, fetchFavorites } from '../API/User';
+import { userLogin } from '../API/User';
 import { connect } from 'react-redux';
-import { LoginAction, getFavorites } from './LoginAction';
+import { LoginAction } from './LoginAction';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
@@ -21,17 +21,11 @@ class Login extends Component {
     const userData = await userLogin(this.state.email, this.state.password);
     if (userData.data) {
       this.props.loginAction(userData.data);
-      this.userFavorites();
     } else {
       this.setState({
         loginError: true
       });
     }
-  }
-
-  async userFavorites() {
-    const savedFavorites = await fetchFavorites(this.props.user.id);
-    this.props.getFavorites(savedFavorites.data);
   }
 
   handleChange(field, event){
@@ -80,8 +74,7 @@ const mapStateToProps =  (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginAction: ( user ) => { dispatch(LoginAction(user)); },
-  getFavorites: (favoriteMovies) => { dispatch(getFavorites(favoriteMovies)); }
+  loginAction: ( user ) => { dispatch(LoginAction(user)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
