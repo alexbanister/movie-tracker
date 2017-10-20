@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { user } from './Login/LoginReducer';
+import { user, favorite } from './Login/LoginReducer';
 import {
   recentMovies,
   favoriteMovies
@@ -10,5 +10,6 @@ export default combineReducers({
   recentMovies,
   favoriteMovies,
   user,
-  newUser
+  newUser,
+  favorite
 });
