@@ -9,7 +9,7 @@ export const user = (store = {}, action) => {
   }
 };
 
-export const favorite =(store = [], action) => {
+export const favorites =(store = [], action) => {
   switch (action.type) {
   case 'GET_FAVORITES':
     return action.favoriteMovies;

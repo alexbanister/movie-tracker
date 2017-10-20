@@ -18,7 +18,6 @@ class Login extends Component {
 
   async handleLogin(event){
     event.preventDefault();
-    debugger
     const userData = await userLogin(this.state.email, this.state.password);
     if (userData.data) {
       this.props.loginAction(userData.data);
@@ -32,7 +31,7 @@ class Login extends Component {
 
   async userFavorites() {
     const savedFavorites = await fetchFavorites(this.props.user.id);
-    getFavorites(savedFavorites.data);
+    this.props.getFavorites(savedFavorites.data);
   }
 
   handleChange(field, event){

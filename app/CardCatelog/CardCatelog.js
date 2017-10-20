@@ -61,7 +61,7 @@ CardCatelog.propTypes = {
 
 const mapStateToProps =  (store) => ({
   recentMovies: store.recentMovies,
-  favoriteMovies: store.favoriteMovies,
+  favorites: store.favorites,
   user: store.user
 });
 
