@@ -10,6 +10,7 @@ import {
 } from './CardCatelogActions';
 import PropTypes from 'prop-types';
 import { addFavoriteFetch } from '../API/User';
+import sliderOptions from './sliderOptions';
 
 class CardCatelog extends Component {
   async componentDidMount() {
@@ -20,45 +21,19 @@ class CardCatelog extends Component {
 
   async addFavoriteMovie(movie) {
     const favoriteMovieForFetch = {
-        movie_id: movie.id,
-        title: movie.title,
-        poster_path: movie.poster_path,
-        release_date: movie.release_date,
-        vote_average: movie.vote_average,
-        overview: movie.overview,
-        user_id: this.props.user.id
+      movie_id: movie.id,
+      title: movie.title,
+      poster_path: movie.poster_path,
+      release_date: movie.release_date,
+      vote_average: movie.vote_average,
+      overview: movie.overview,
+      user_id: this.props.user.id
     };
     const movieReturn = await addFavoriteFetch(favoriteMovieForFetch);
     this.props.addFavorite(movie);
   }
 
   render() {
-    const options = {
-      infinite: false,
-      accessibility: true,
-      arrows: true,
-      variableWidth: false,
-      slidesToShow: 4,
-      slidesToScroll: 4,
-      focusOnSelect: true,
-      responsive: [{
-        breakpoint: 300, settings:
-          { slidesToShow: 1 }
-      }, {
-        breakpoint: 600, settings:
-          { slidesToShow: 2 }
-      }, {
-        breakpoint: 800, settings:
-          { slidesToShow: 2 }
-      }, {
-        breakpoint: 1000, settings:
-          { slidesToShow: 4 }
-      }, {
-        breakpoint: 1200, settings:
-          { slidesToShow: 5 }
-      }]
-    };
-
     const allMovies = this.props.recentMovies.map( (movie, index) => {
       return (<Card key={index }
         movie={movie}
@@ -67,7 +42,7 @@ class CardCatelog extends Component {
     return (
       <div className='CardCatelog'>
         <div className='slider'>
-          <Slider {...options}>
+          <Slider {...sliderOptions}>
             {allMovies}
           </Slider>
         </div>
