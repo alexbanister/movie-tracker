@@ -12,7 +12,6 @@ export const favoriteMovies = (store = [], action) => {
   case 'GET_FAVORITES':
     return store;
   case 'ADD_FAVORITE':
-  console.log('hi john');
     return [...store, action.favMov];
   default:
     return store;

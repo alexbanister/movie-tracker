@@ -79,6 +79,7 @@ class CardCatelog extends Component {
 CardCatelog.propTypes = {
   recentMovies: PropTypes.array,
   addRecentMovies: PropTypes.func,
+  user: PropTypes.object,
   getFavorites: PropTypes.func,
   favoriteMovie: PropTypes.func
 };
