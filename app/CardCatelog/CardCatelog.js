@@ -9,7 +9,11 @@ import {
   addFavorite
 } from './CardCatelogActions';
 import PropTypes from 'prop-types';
-import { addFavoriteFetch, fetchFavorites } from '../API/User';
+import {
+  addFavoriteFetch,
+  fetchFavorites,
+  fetchRemoveFavorite
+} from '../API/User';
 import sliderOptions from './sliderOptions';
 
 class CardCatelog extends Component {
@@ -49,7 +53,7 @@ class CardCatelog extends Component {
         fav.movie_id === movie.id
       ));
       if (isFavorite) {
-        clickAction=this.addFavoriteMovie.bind(this);
+        clickAction=() => fetchRemoveFavorite(this.props.user.id, isFavorite.movie_id);
         cardStyle='isFavorite';
         favoriteText='Remove from Favorites';
       }
