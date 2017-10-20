@@ -14,14 +14,9 @@ import sliderOptions from './sliderOptions';
 
 class CardCatelog extends Component {
   async componentDidMount() {
-    console.log('mounting');
     const recentMovies = await fetchRecentMovies();
     this.props.addRecentMovies(recentMovies);
-  }
-
-  componentWillReceiveProps(nextProps) {
     if (this.props.user.id) {
-      console.log('got props');
       this.getUserFavorites();
     }
   }
@@ -45,17 +40,33 @@ class CardCatelog extends Component {
     this.props.getFavorites(savedFavorites.data);
   }
 
-  render() {
-    const allMovies = this.props.recentMovies.map( (movie, index) => {
-      return (<Card key={index }
+  buildCards() {
+    return this.props.recentMovies.map( (movie, index) => {
+      let clickAction=this.addFavoriteMovie.bind(this);
+      let cardStyle='';
+      let favoriteText='Add to Favorites';
+      const isFavorite = this.props.favoriteMovies.find( fav => (
+        fav.movie_id === movie.id
+      ));
+      if (isFavorite) {
+        clickAction=this.addFavoriteMovie.bind(this);
+        cardStyle='isFavorite';
+        favoriteText='Remove from Favorites';
+      }
+      return (<Card key={index}
         movie={movie}
-        addFavoriteMovie={this.addFavoriteMovie.bind(this)} />);
+        cardStyle={cardStyle}
+        favoriteText={favoriteText}
+        clickAction={clickAction} />);
     });
+  }
+
+  render() {
     return (
       <div className='CardCatelog'>
         <div className='slider'>
           <Slider {...sliderOptions}>
-            {allMovies}
+            {this.buildCards()}
           </Slider>
         </div>
       </div>
@@ -68,12 +79,12 @@ CardCatelog.propTypes = {
   addRecentMovies: PropTypes.func,
   user: PropTypes.object,
   getFavorites: PropTypes.func,
-  favoriteMovie: PropTypes.func
+  favoriteMovies: PropTypes.array
 };
 
 const mapStateToProps =  (store) => ({
   recentMovies: store.recentMovies,
-  favorites: store.favorites,
+  favoriteMovies: store.favoriteMovies,
   user: store.user
 });
 
