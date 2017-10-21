@@ -6,7 +6,8 @@ import Slider from 'react-slick';
 import {
   addRecentMovies,
   getFavorites,
-  addFavorite
+  addFavorite,
+  removeFavorites
 } from './CardCatelogActions';
 import PropTypes from 'prop-types';
 import {
@@ -29,11 +30,12 @@ class CardCatelog extends Component {
     const updatedFavoriteMovies = this.props.favoriteMovies.filter((movie) => {
       return movie.movie_id !== favMovie.id;
     });
+    this.props.removeFavorites(updatedFavoriteMovies);
   }
 
   removeFavorites = (movie) => {
     fetchRemoveFavorite(this.props.user.id, movie.id);
-    const findAndRemove = this.findFavToRemoveFromStore(movie);
+    this.findFavToRemoveFromStore(movie);
   }
 
   addFavoriteMovie = async (movie) => {
@@ -98,7 +100,8 @@ CardCatelog.propTypes = {
   user: PropTypes.object,
   getFavorites: PropTypes.func,
   favoriteMovies: PropTypes.array,
-  addFavorite: PropTypes.func
+  addFavorite: PropTypes.func,
+  removeFavorites: PropTypes.func
 };
 
 const mapStateToProps =  (store) => ({
@@ -112,7 +115,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(addRecentMovies(recentMovies));
   },
   getFavorites: (favoriteMovies) => { dispatch(getFavorites(favoriteMovies)); },
-  addFavorite: (favMov) => { dispatch(addFavorite(favMov)); }
+  addFavorite: (favMov) => { dispatch(addFavorite(favMov)); },
+  removeFavorites: (favoriteMovies) => { dispatch(removeFavorites(favoriteMovies)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardCatelog);
