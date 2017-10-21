@@ -27,19 +27,30 @@ const addFavoriteFetch = (favMov) => {
     headers: {'Content-Type': 'application/json'}
   })
     .then(response => response.json())
-    .then(jr => jr)
+    .then(jsonResponse => jsonResponse)
     .catch(error => console.log(error.json()));
 };
 
 const fetchFavorites = (id) => {
   return fetch(`/api/users/${id}/favorites`)
     .then(response => response.json())
-    .then(jr => jr);
+    .then(jsonResponse => jsonResponse);
+};
+
+const fetchRemoveFavorite = (userId, favId) => {
+  console.log(favId);
+  return fetch(`/api/users/${userId}/favorites/${favId}`, {
+    method:'delete',
+    headers: {'Content-Type': 'application/json'}
+  })
+  .then(response => response.json())
+  .then(jsonResponse => console.log(jsonResponse));
 };
 
 module.exports = {
   userLogin,
   userSignUp,
   addFavoriteFetch,
-  fetchFavorites
+  fetchFavorites,
+  fetchRemoveFavorite
 };
