@@ -1,47 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const Card = ({
-  movie,
-  clickAction,
-  cardStyle,
-  favoriteText,
-  addToFavorites,
-  removeFavorites }) => {
+class Card extends Component {
 
-  const backgroundImage = {
-    backgroundImage: `url(https://image.tmdb.org/t/p/w500/${movie.poster_path})`
+  backgroundImage = {
+    backgroundImage: `url(https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path})`
   };
 
-  const handleFavorite = () => {
-    if (cardStyle === '') {
-      addToFavorites(movie);
+  componentWillReceive(nextProps) {
+    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
+  }
+
+  componentWillUpdate(nextProps) {
+    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
+  }
+
+  handleFavorite = () => {
+    if (this.props.cardStyle === '') {
+      this.props.addToFavorites(this.props.movie);
     } else {
-      removeFavorites(movie);
+      this.props.removeFavorites(this.props.movie);
     }
   };
 
-  return (
-    <span className='movieCardContainer'>
-      <div className={`movieCard ${cardStyle}`} style={backgroundImage}>
-        <div className='movieInfo'>
-          <h2>{movie.title}</h2>
-          <h4>{movie.release_date}</h4>
-          <div onClick={handleFavorite}>
-            {favoriteText}
+  render() {
+    return (
+      <span className='movieCardContainer'>
+        <div className={`movieCard ${this.props.cardStyle}`} style={this.backgroundImage}>
+          <div className='movieInfo'>
+            <h2>{this.props.movie.title}</h2>
+            <h4>{this.props.movie.release_date}</h4>
+            <div onClick={this.handleFavorite}>
+              {this.props.favoriteText}
+            </div>
           </div>
         </div>
-      </div>
-    </span>
-  );
-};
+      </span>
+    );
+  }
+}
+
 
 Card.propTypes = {
   movie: PropTypes.object,
-  clickAction: PropTypes.func,
   removeFavorites: PropTypes.func,
   addToFavorites: PropTypes.func,
   cardStyle: PropTypes.string,
-  favoriteText: PropTypes.string
+  favoriteText: PropTypes.string,
+  favoriteMovies: PropTypes.array
 };
+
 export default Card;

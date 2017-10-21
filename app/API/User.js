@@ -38,7 +38,6 @@ const fetchFavorites = (id) => {
 };
 
 const fetchRemoveFavorite = (userId, favId) => {
-  console.log(favId);
   return fetch(`/api/users/${userId}/favorites/${favId}`, {
     method:'delete',
     headers: {'Content-Type': 'application/json'}
