@@ -1,13 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Card = ({ movie, clickAction, cardStyle, favoriteText }) => {
+const Card = ({
+  movie,
+  clickAction,
+  cardStyle,
+  favoriteText,
+  addToFavorites,
+  removeFavorites }) => {
+
   const backgroundImage = {
     backgroundImage: `url(https://image.tmdb.org/t/p/w500/${movie.poster_path})`
   };
 
-  const handleAddFavorite = () => {
-    clickAction(movie);
+  const handleFavorite = () => {
+    if (cardStyle === '') {
+      addToFavorites(movie);
+    } else {
+      removeFavorites(movie);
+    }
   };
 
   return (
@@ -16,7 +27,7 @@ const Card = ({ movie, clickAction, cardStyle, favoriteText }) => {
         <div className='movieInfo'>
           <h2>{movie.title}</h2>
           <h4>{movie.release_date}</h4>
-          <div onClick={handleAddFavorite}>
+          <div onClick={handleFavorite}>
             {favoriteText}
           </div>
         </div>
@@ -28,6 +39,8 @@ const Card = ({ movie, clickAction, cardStyle, favoriteText }) => {
 Card.propTypes = {
   movie: PropTypes.object,
   clickAction: PropTypes.func,
+  removeFavorites: PropTypes.func,
+  addToFavorites: PropTypes.func,
   cardStyle: PropTypes.string,
   favoriteText: PropTypes.string
 };

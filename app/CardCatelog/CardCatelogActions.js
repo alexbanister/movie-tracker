@@ -14,3 +14,10 @@ export const getFavorites = (favoriteMovies) => {
     favoriteMovies
   };
 };
+
+export const removeFavorites = (favoriteMovies) => {
+  return {
+    type: 'REMOVE_FAVORITES',
+    favoriteMovies
+  };
+};

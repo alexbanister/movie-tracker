@@ -13,6 +13,8 @@ export const favoriteMovies = (store = [], action) => {
     return [...action.favoriteMovies];
   case 'ADD_FAVORITE':
     return [...store, action.favMov];
+  case 'REMOVE_FAVORITES':
+    return [...action.favoriteMovies];
   default:
     return store;
   }

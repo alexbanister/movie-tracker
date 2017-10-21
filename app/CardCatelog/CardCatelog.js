@@ -3,20 +3,22 @@ import React, { Component } from 'react';
 import { fetchRecentMovies } from '../API/movieDatabase';
 import Card from '../Card/Card';
 import Slider from 'react-slick';
+import PropTypes from 'prop-types';
+import sliderOptions from './sliderOptions';
 import {
   addRecentMovies,
   getFavorites,
-  addFavorite
+  addFavorite,
+  removeFavorites
 } from './CardCatelogActions';
-import PropTypes from 'prop-types';
 import {
   addFavoriteFetch,
   fetchFavorites,
   fetchRemoveFavorite
 } from '../API/User';
-import sliderOptions from './sliderOptions';
 
 class CardCatelog extends Component {
+
   async componentDidMount() {
     const recentMovies = await fetchRecentMovies();
     this.props.addRecentMovies(recentMovies);
@@ -25,7 +27,23 @@ class CardCatelog extends Component {
     }
   }
 
-  async addFavoriteMovie(movie) {
+  shouldComponentUpdate(nextProps) {
+    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
+  }
+
+  findFavToRemoveFromStore(favMovie) {
+    const updatedFavoriteMovies = this.props.favoriteMovies.filter((movie) => {
+      return movie.movie_id !== favMovie.id;
+    });
+    this.props.removeFavorites(updatedFavoriteMovies);
+  }
+
+  removeFavorites = (movie) => {
+    fetchRemoveFavorite(this.props.user.id, movie.id);
+    this.findFavToRemoveFromStore(movie);
+  }
+
+  addFavoriteMovie = async (movie) => {
     const favoriteMovieForFetch = {
       movie_id: movie.id,
       title: movie.title,
@@ -46,14 +64,12 @@ class CardCatelog extends Component {
 
   buildCards() {
     return this.props.recentMovies.map( (movie, index) => {
-      let clickAction=this.addFavoriteMovie.bind(this);
       let cardStyle='';
       let favoriteText='Add to Favorites';
       const isFavorite = this.props.favoriteMovies.find( fav => (
         fav.movie_id === movie.id
       ));
       if (isFavorite) {
-        clickAction=() => fetchRemoveFavorite(this.props.user.id, isFavorite.movie_id);
         cardStyle='isFavorite';
         favoriteText='Remove from Favorites';
       }
@@ -61,9 +77,14 @@ class CardCatelog extends Component {
         movie={movie}
         cardStyle={cardStyle}
         favoriteText={favoriteText}
-        clickAction={clickAction} />);
+        addToFavorites={this.addFavoriteMovie}
+        removeFavorites={this.removeFavorites}
+        currentFavoriteMovies={this.props.favoriteMovies}
+      />
+      );
     });
   }
+
 
   render() {
     return (
@@ -84,7 +105,8 @@ CardCatelog.propTypes = {
   user: PropTypes.object,
   getFavorites: PropTypes.func,
   favoriteMovies: PropTypes.array,
-  addFavorite: PropTypes.func
+  addFavorite: PropTypes.func,
+  removeFavorites: PropTypes.func
 };
 
 const mapStateToProps =  (store) => ({
@@ -98,7 +120,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(addRecentMovies(recentMovies));
   },
   getFavorites: (favoriteMovies) => { dispatch(getFavorites(favoriteMovies)); },
-  addFavorite: (favMov) => { dispatch(addFavorite(favMov)); }
+  addFavorite: (favMov) => { dispatch(addFavorite(favMov)); },
+  removeFavorites: (favoriteMovies) => { dispatch(removeFavorites(favoriteMovies)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardCatelog);
