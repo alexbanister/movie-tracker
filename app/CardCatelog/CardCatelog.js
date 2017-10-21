@@ -27,10 +27,6 @@ class CardCatelog extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
-  }
-
   findFavToRemoveFromStore(favMovie) {
     const updatedFavoriteMovies = this.props.favoriteMovies.filter((movie) => {
       return movie.movie_id !== favMovie.id;
@@ -79,7 +75,7 @@ class CardCatelog extends Component {
         favoriteText={favoriteText}
         addToFavorites={this.addFavoriteMovie}
         removeFavorites={this.removeFavorites}
-        currentFavoriteMovies={this.props.favoriteMovies}
+        favoriteMovies={this.props.favoriteMovies}
       />
       );
     });
