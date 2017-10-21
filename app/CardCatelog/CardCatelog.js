@@ -3,27 +3,32 @@ import React, { Component } from 'react';
 import { fetchRecentMovies } from '../API/movieDatabase';
 import Card from '../Card/Card';
 import Slider from 'react-slick';
+import PropTypes from 'prop-types';
+import sliderOptions from './sliderOptions';
 import {
   addRecentMovies,
   getFavorites,
   addFavorite,
   removeFavorites
 } from './CardCatelogActions';
-import PropTypes from 'prop-types';
 import {
   addFavoriteFetch,
   fetchFavorites,
   fetchRemoveFavorite
 } from '../API/User';
-import sliderOptions from './sliderOptions';
 
 class CardCatelog extends Component {
+
   async componentDidMount() {
     const recentMovies = await fetchRecentMovies();
     this.props.addRecentMovies(recentMovies);
     if (this.props.user.id) {
       this.getUserFavorites();
     }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
   }
 
   findFavToRemoveFromStore(favMovie) {
