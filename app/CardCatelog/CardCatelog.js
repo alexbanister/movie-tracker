@@ -40,6 +40,7 @@ class CardCatelog extends Component {
   }
 
   addFavoriteMovie = async (movie) => {
+    debugger;
     const favoriteMovieForFetch = {
       movie_id: movie.id,
       title: movie.title,

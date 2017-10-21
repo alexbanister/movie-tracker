@@ -7,7 +7,11 @@ class Card extends Component {
     backgroundImage: `url(https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path})`
   };
 
-  shouldComponentUpdate(nextProps) {
+  componentWillReceive(nextProps) {
+    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
+  }
+
+  componentWillUpdate(nextProps) {
     return  this.props.favoriteMovies !== nextProps.favoriteMovies;
   }
 
@@ -45,4 +49,5 @@ Card.propTypes = {
   favoriteText: PropTypes.string,
   favoriteMovies: PropTypes.array
 };
+
 export default Card;
