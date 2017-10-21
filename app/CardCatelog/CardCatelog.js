@@ -25,7 +25,20 @@ class CardCatelog extends Component {
     }
   }
 
-  async addFavoriteMovie(movie) {
+  findFavToRemoveFromStore(favMovie) {
+    console.log(favMovie.id);
+    this.props.favoriteMovies.filter((movie) => {
+      return !movie.movie_id === favMovie.id;
+    });
+  }
+
+  removeFavorites = (movie) => {
+    console.log(movie.id);
+    fetchRemoveFavorite(this.props.user.id, movie.id);
+    const findAndRemove = this.findFavToRemoveFromStore(movie);
+  }
+
+  addFavoriteMovie = async (movie) => {
     const favoriteMovieForFetch = {
       movie_id: movie.id,
       title: movie.title,
@@ -46,14 +59,12 @@ class CardCatelog extends Component {
 
   buildCards() {
     return this.props.recentMovies.map( (movie, index) => {
-      let clickAction=this.addFavoriteMovie.bind(this);
       let cardStyle='';
       let favoriteText='Add to Favorites';
       const isFavorite = this.props.favoriteMovies.find( fav => (
         fav.movie_id === movie.id
       ));
       if (isFavorite) {
-        clickAction=() => fetchRemoveFavorite(this.props.user.id, isFavorite.movie_id);
         cardStyle='isFavorite';
         favoriteText='Remove from Favorites';
       }
@@ -61,9 +72,14 @@ class CardCatelog extends Component {
         movie={movie}
         cardStyle={cardStyle}
         favoriteText={favoriteText}
-        clickAction={clickAction} />);
+        addToFavorites={this.addFavoriteMovie}
+        removeFavorites={this.removeFavorites}
+        currentFavoriteMovies={this.props.favoriteMovies}
+      />
+      );
     });
   }
+
 
   render() {
     return (

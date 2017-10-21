@@ -43,8 +43,7 @@ const fetchRemoveFavorite = (userId, favId) => {
     method:'delete',
     headers: {'Content-Type': 'application/json'}
   })
-  .then(response => response.json())
-  .then(jsonResponse => console.log(jsonResponse));
+    .then(response => response.json());
 };
 
 module.exports = {
