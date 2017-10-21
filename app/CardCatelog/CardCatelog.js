@@ -26,14 +26,12 @@ class CardCatelog extends Component {
   }
 
   findFavToRemoveFromStore(favMovie) {
-    console.log(favMovie.id);
-    this.props.favoriteMovies.filter((movie) => {
-      return !movie.movie_id === favMovie.id;
+    const updatedFavoriteMovies = this.props.favoriteMovies.filter((movie) => {
+      return movie.movie_id !== favMovie.id;
     });
   }
 
   removeFavorites = (movie) => {
-    console.log(movie.id);
     fetchRemoveFavorite(this.props.user.id, movie.id);
     const findAndRemove = this.findFavToRemoveFromStore(movie);
   }
