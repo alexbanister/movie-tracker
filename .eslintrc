@@ -16,6 +16,7 @@
   },
   // Having a problem with one of these rules? Learn more about it here: https://eslint.org/docs/rules/
   "rules": {
+    "properties": 0,
     "eqeqeq": ["error", "always"],
     "getter-return": ["error", { "allowImplicit": true }],
     "indent": ["warn", 2],
