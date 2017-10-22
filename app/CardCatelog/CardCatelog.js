@@ -21,6 +21,7 @@ class CardCatelog extends Component {
 
   async componentDidMount() {
     const recentMovies = await fetchRecentMovies();
+    console.log(recentMovies);
     this.props.addRecentMovies(recentMovies);
     if (this.props.user.id) {
       this.getUserFavorites();
