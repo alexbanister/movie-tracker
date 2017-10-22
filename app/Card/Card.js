@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom'
 
-class Card extends Component {
+const Card = ({
+  history,
+  user,
+  movie,
+  clickAction,
+  cardStyle,
+  favoriteText,
+  addToFavorites,
+  removeFavorites }) => {
 
   backgroundImage = {
     backgroundImage: `url(https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path})`
   };
 
-  componentWillReceive(nextProps) {
-    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
-  }
-
-  componentWillUpdate(nextProps) {
-    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
-  }
-
-  handleFavorite = () => {
-    if (this.props.cardStyle === '') {
-      this.props.addToFavorites(this.props.movie);
+  const handleFavorite = () => {
+    if (!user.id) {
+      history.push('/login');
+    } else if (cardStyle === '') {
+      addToFavorites(movie);
     } else {
       this.props.removeFavorites(this.props.movie);
     }
@@ -43,11 +46,15 @@ class Card extends Component {
 
 Card.propTypes = {
   movie: PropTypes.object,
+  user: PropTypes.object,
+  clickAction: PropTypes.func,
   removeFavorites: PropTypes.func,
   addToFavorites: PropTypes.func,
   cardStyle: PropTypes.string,
   favoriteText: PropTypes.string,
-  favoriteMovies: PropTypes.array
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 };
 
-export default Card;
+export default withRouter(Card);

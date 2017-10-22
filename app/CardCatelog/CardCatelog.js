@@ -71,6 +71,7 @@ class CardCatelog extends Component {
         favoriteText='Remove from Favorites';
       }
       return (<Card key={movie.id}
+        user={this.props.user}
         movie={movie}
         cardStyle={cardStyle}
         favoriteText={favoriteText}
