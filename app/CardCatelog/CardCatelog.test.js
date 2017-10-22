@@ -104,13 +104,13 @@ describe('CardCatalog Reducers', () => {
     };
     const expectation = action.recentMovies;
 
-  expect(reducers.recentMovies(undefined, action)).toEqual(expectation);
-});
+    expect(reducers.recentMovies(undefined, action)).toEqual(expectation);
+  });
 
   it('favoriteMovies should set a default state', () => {
     const expectation = [];
-  expect(reducers.favoriteMovies(undefined, {})).toEqual(expectation);
-});
+    expect(reducers.favoriteMovies(undefined, {})).toEqual(expectation);
+  });
 
   it('GET_FAVORITES should update favorite movies to state', () => {
     const action = {
