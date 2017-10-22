@@ -1,6 +1,6 @@
 export const SignUpAction = (newUser) => {
   return {
-    type: 'SignUp_ACTION',
+    type: 'SIGN_UP_ACTION',
     newUser
   };
 };

@@ -1,6 +1,6 @@
 import * as actions from './HeaderAction';
 
-describe('CardCatalog', ()=>{
+describe('Header Action', ()=>{
 
   it('logOutAction should return an action', () => {
     const expected = {
