@@ -5,6 +5,7 @@ import Card from '../Card/Card';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 import sliderOptions from './sliderOptions';
+import { LoginAction } from '../Login/LoginAction';
 import {
   addRecentMovies,
   getFavorites,
@@ -18,8 +19,11 @@ import {
 } from '../API/User';
 
 class CardCatelog extends Component {
-
   async componentDidMount() {
+    const user = JSON.parse(localStorage.getItem('movieTrackerUser'));
+    if (user){
+      this.props.loginAction(user);
+    }
     const recentMovies = await fetchRecentMovies();
     console.log(recentMovies);
     this.props.addRecentMovies(recentMovies);
@@ -117,7 +121,8 @@ CardCatelog.propTypes = {
   favoriteMovies: PropTypes.array,
   addFavorite: PropTypes.func,
   removeFavorites: PropTypes.func,
-  match: PropTypes.object
+  match: PropTypes.object,
+  loginAction: PropTypes.func
 };
 
 const mapStateToProps =  (store) => ({
@@ -134,7 +139,8 @@ const mapDispatchToProps = (dispatch) => ({
   addFavorite: (favMov) => { dispatch(addFavorite(favMov)); },
   removeFavorites: (favoriteMovies) => {
     dispatch(removeFavorites(favoriteMovies));
-  }
+  },
+  loginAction: ( user ) => { dispatch(LoginAction(user)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardCatelog);

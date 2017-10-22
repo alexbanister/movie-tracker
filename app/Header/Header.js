@@ -5,6 +5,11 @@ import { logOutAction } from './HeaderAction.js';
 import PropTypes from 'prop-types';
 
 const Header = (props)=>{
+  const handleLogout = () => {
+    localStorage.removeItem('movieTrackerUser');
+    props.logOutAction();
+  };
+
   return (
     <header>
       {
@@ -17,7 +22,7 @@ const Header = (props)=>{
       {
         props.user.id &&
         <div className='auth-links'>
-          <NavLink to='/' onClick={props.logOutAction}>Log Out</NavLink>
+          <NavLink to='/' onClick={handleLogout}>Log Out</NavLink>
         </div>
       }
       <h1>Movie<strong>Tracker</strong></h1>

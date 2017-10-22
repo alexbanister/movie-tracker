@@ -20,6 +20,7 @@ class Login extends Component {
     event.preventDefault();
     const userData = await userLogin(this.state.email, this.state.password);
     if (userData.data) {
+      localStorage.setItem('movieTrackerUser', JSON.stringify(userData.data));
       this.props.loginAction(userData.data);
     } else {
       this.setState({
