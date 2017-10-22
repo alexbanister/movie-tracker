@@ -22,7 +22,7 @@ function getAllUsers(req, res, next) {
 }
 
 function signIn(req, res, next) {
-  db.one('select * from users where email=${email} and password=${password}', req.body)
+  db.one('select id, name, email from users where email=${email} and password=${password}', req.body)
   .then(function (data) {
   res.status(200)
     .json({
