@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 const Card = ({
   key,
@@ -23,7 +23,6 @@ const Card = ({
     } else if (cardStyle === '') {
       addToFavorites(movie);
     } else {
-      console.log('here');
       removeFavorites(movie);
     }
   };
@@ -53,8 +52,9 @@ Card.propTypes = {
   cardStyle: PropTypes.string,
   favoriteText: PropTypes.string,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired
+    push: PropTypes.func
+  }),
+  key:PropTypes.string
 };
 
 export default withRouter(Card);
