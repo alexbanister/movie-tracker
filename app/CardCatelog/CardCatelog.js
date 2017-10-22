@@ -64,7 +64,7 @@ class CardCatelog extends Component {
       let cardStyle='';
       let favoriteText='Add to Favorites';
       const isFavorite = this.props.favoriteMovies.find( fav => (
-        fav.movie_id === movie.id
+        fav.movie_id === movie.id || fav.id === movie.id
       ));
       if (isFavorite) {
         cardStyle='isFavorite';

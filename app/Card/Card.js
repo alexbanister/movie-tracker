@@ -14,7 +14,7 @@ const Card = ({
   removeFavorites }) => {
 
   const backgroundImage = {
-    backgroundImage: `url(https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path})`
+    backgroundImage: `url(https://image.tmdb.org/t/p/w500/${movie.poster_path})`
   };
 
   const handleFavorite = () => {
@@ -23,7 +23,8 @@ const Card = ({
     } else if (cardStyle === '') {
       addToFavorites(movie);
     } else {
-      this.props.removeFavorites(this.props.movie);
+      console.log('here');
+      removeFavorites(movie);
     }
   };
 
