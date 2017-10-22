@@ -28,13 +28,9 @@ class CardCatelog extends Component {
   }
 
   findFavToRemoveFromStore(favMovie) {
-    console.log(favMovie);
     const updatedFavoriteMovies = this.props.favoriteMovies.filter((movie) => {
-      console.log(favMovie.movie_id);
-      console.log(movie.movie_id);
-      return movie.movie_id !== favMovie.id;
+      return movie.id !== favMovie.id;
     });
-    console.log(updatedFavoriteMovies);
     this.props.removeFavorites(updatedFavoriteMovies);
   }
 
@@ -45,6 +41,7 @@ class CardCatelog extends Component {
 
   addFavoriteMovie = async (movie) => {
     const favoriteMovieForFetch = {
+      id: movie.id,
       movie_id: movie.id,
       title: movie.title,
       poster_path: movie.poster_path,
@@ -59,18 +56,16 @@ class CardCatelog extends Component {
 
   async getUserFavorites() {
     const savedFavorites = await fetchFavorites(this.props.user.id);
-    const cleanfavorites = this.cleanfavorites(savedFavorites.data);
-    this.props.getFavorites(cleanfavorites);
+    const favoritesForStore = this.cleanFavorites(savedFavorites.data);
+    this.props.getFavorites(favoritesForStore);
   }
 
-  cleanfavorites(savedFavorites){
-      const clean = savedFavorites.map((movie) =>{
+  cleanFavorites(savedFavorites){
+    const cleanedFavorites = savedFavorites.map((movie) =>{
       let movieId = {id: movie.movie_id};
-        let obj = Object.assign({}, movie, movieId);
-        return obj     
+      return  Object.assign({}, movie, movieId);
     });
-    console.log(clean);
-    return clean
+    return cleanedFavorites;
   }
 
   buildCards(movies) {
@@ -78,7 +73,7 @@ class CardCatelog extends Component {
       let cardStyle='';
       let favoriteText='Add to Favorites';
       const isFavorite = this.props.favoriteMovies.find( fav => {
-        return fav.id === movie.id
+        return fav.id === movie.id;
       });
       if (isFavorite) {
         cardStyle='isFavorite';
@@ -99,12 +94,13 @@ class CardCatelog extends Component {
 
 
   render() {
-    const moviesToLoad = this.props.match.path === '/favorites' ? this.props.favoriteMovies : this.props.recentMovies
+    const moviesToLoad = this.props.match.path === '/favorites'
+      ? this.props.favoriteMovies : this.props.recentMovies;
     return (
       <div className='CardCatelog'>
         <div className='slider'>
           {/* <Slider {...sliderOptions}> */}
-            {this.buildCards(moviesToLoad)}
+          {this.buildCards(moviesToLoad)}
           {/* </Slider> */}
         </div>
       </div>
@@ -119,7 +115,8 @@ CardCatelog.propTypes = {
   getFavorites: PropTypes.func,
   favoriteMovies: PropTypes.array,
   addFavorite: PropTypes.func,
-  removeFavorites: PropTypes.func
+  removeFavorites: PropTypes.func,
+  match: PropTypes.object
 };
 
 const mapStateToProps =  (store) => ({
@@ -134,7 +131,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getFavorites: (favoriteMovies) => { dispatch(getFavorites(favoriteMovies)); },
   addFavorite: (favMov) => { dispatch(addFavorite(favMov)); },
-  removeFavorites: (favoriteMovies) => { dispatch(removeFavorites(favoriteMovies)); }
+  removeFavorites: (favoriteMovies) => {
+    dispatch(removeFavorites(favoriteMovies));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardCatelog);

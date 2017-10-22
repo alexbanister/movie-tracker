@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 const Card = ({
   key,
@@ -18,13 +18,11 @@ const Card = ({
   };
 
   const handleFavorite = () => {
-    // if (!user.id) {
-    //   history.push('/login');
-    // }
-    if (cardStyle === '') {
+    if (!user.id) {
+      history.push('/login');
+    } else if (cardStyle === '') {
       addToFavorites(movie);
     } else {
-      console.log('here');
       removeFavorites(movie);
     }
   };
@@ -55,7 +53,8 @@ Card.propTypes = {
   favoriteText: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func
-  })
+  }),
+  key:PropTypes.string
 };
 
 export default withRouter(Card);

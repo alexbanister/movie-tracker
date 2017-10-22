@@ -3,6 +3,7 @@ import { userSignUp, userLogin } from '../API/User';
 import { LoginAction } from '../Login/LoginAction';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class SignUp extends Component {
   constructor() {
@@ -24,9 +25,7 @@ class SignUp extends Component {
   }
 
   async createUser(){
-    console.log('click');
     if (this.state.password === this.state.retypePassword){
-      console.log('create if');
       const newUserData = await userSignUp(
         this.state.email,
         this.state.password,
@@ -40,14 +39,11 @@ class SignUp extends Component {
     }
   }
 
-  async logInNewUser(newUserData){
-    console.log(newUserData);
+  async logInNewUser(newUserData) {
     if (newUserData.status === 'success') {
-      console.log('logIn if');
       const userData = await userLogin(this.state.email, this.state.password);
       this.props.loginAction(userData.data);
     } else {
-      console.log('login else');
       this.setState({
         signUpError: true
       });
@@ -70,7 +66,7 @@ class SignUp extends Component {
         }
         {
           this.state.signUpError &&
-          <h2>Password Already Exists</h2>
+          <h2>Email Already Exists</h2>
         }
         {
           this.props.user.id &&
@@ -102,6 +98,11 @@ class SignUp extends Component {
     );
   }
 }
+
+SignUp.propTypes ={
+  loginAction: PropTypes.func,
+  user: PropTypes.object
+};
 
 const mapStateToProps =  (store) => ({
   user: store.user
