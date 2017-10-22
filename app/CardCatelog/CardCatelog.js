@@ -28,9 +28,13 @@ class CardCatelog extends Component {
   }
 
   findFavToRemoveFromStore(favMovie) {
+    console.log(favMovie);
     const updatedFavoriteMovies = this.props.favoriteMovies.filter((movie) => {
+      console.log(favMovie.movie_id);
+      console.log(movie.movie_id);
       return movie.movie_id !== favMovie.id;
     });
+    console.log(updatedFavoriteMovies);
     this.props.removeFavorites(updatedFavoriteMovies);
   }
 
@@ -40,7 +44,6 @@ class CardCatelog extends Component {
   }
 
   addFavoriteMovie = async (movie) => {
-    debugger;
     const favoriteMovieForFetch = {
       movie_id: movie.id,
       title: movie.title,
@@ -56,16 +59,27 @@ class CardCatelog extends Component {
 
   async getUserFavorites() {
     const savedFavorites = await fetchFavorites(this.props.user.id);
-    this.props.getFavorites(savedFavorites.data);
+    const cleanfavorites = this.cleanfavorites(savedFavorites.data);
+    this.props.getFavorites(cleanfavorites);
+  }
+
+  cleanfavorites(savedFavorites){
+      const clean = savedFavorites.map((movie) =>{
+      let movieId = {id: movie.movie_id};
+        let obj = Object.assign({}, movie, movieId);
+        return obj     
+    });
+    console.log(clean);
+    return clean
   }
 
   buildCards(movies) {
     return movies.map( movie => {
       let cardStyle='';
       let favoriteText='Add to Favorites';
-      const isFavorite = this.props.favoriteMovies.find( fav => (
-        fav.movie_id === movie.id || fav.id === movie.id
-      ));
+      const isFavorite = this.props.favoriteMovies.find( fav => {
+        return fav.id === movie.id
+      });
       if (isFavorite) {
         cardStyle='isFavorite';
         favoriteText='Remove from Favorites';

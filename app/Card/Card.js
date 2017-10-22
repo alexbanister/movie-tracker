@@ -18,9 +18,10 @@ const Card = ({
   };
 
   const handleFavorite = () => {
-    if (!user.id) {
-      history.push('/login');
-    } else if (cardStyle === '') {
+    // if (!user.id) {
+    //   history.push('/login');
+    // }
+    if (cardStyle === '') {
       addToFavorites(movie);
     } else {
       console.log('here');
@@ -53,8 +54,8 @@ Card.propTypes = {
   cardStyle: PropTypes.string,
   favoriteText: PropTypes.string,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired
+    push: PropTypes.func
+  })
 };
 
 export default withRouter(Card);
