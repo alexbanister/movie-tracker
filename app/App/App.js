@@ -10,6 +10,7 @@ export default class App extends Component {
     return ([
       <Route path='/' component={Header} key='header'/>,
       <Route exact path='/' component={CardCatelog} key='CardCatelog'/>,
+      <Route exact path='/favorites' component={CardCatelog} key='favorites'/>,
       <Route exact path='/login' component={Login} key='login' />,
       <Route exact path='/signup' component={SignUp} key='signup' />
     ]);

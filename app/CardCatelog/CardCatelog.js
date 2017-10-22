@@ -59,8 +59,8 @@ class CardCatelog extends Component {
     this.props.getFavorites(savedFavorites.data);
   }
 
-  buildCards() {
-    return this.props.recentMovies.map( movie => {
+  buildCards(movies) {
+    return movies.map( movie => {
       let cardStyle='';
       let favoriteText='Add to Favorites';
       const isFavorite = this.props.favoriteMovies.find( fav => (
@@ -85,12 +85,13 @@ class CardCatelog extends Component {
 
 
   render() {
+    const moviesToLoad = this.props.match.path === '/favorites' ? this.props.favoriteMovies : this.props.recentMovies
     return (
       <div className='CardCatelog'>
         <div className='slider'>
-          <Slider {...sliderOptions}>
-            {this.buildCards()}
-          </Slider>
+          {/* <Slider {...sliderOptions}> */}
+            {this.buildCards(moviesToLoad)}
+          {/* </Slider> */}
         </div>
       </div>
     );

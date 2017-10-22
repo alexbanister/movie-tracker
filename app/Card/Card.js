@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom'
 
 const Card = ({
+  key,
   history,
   user,
   movie,
@@ -12,7 +13,7 @@ const Card = ({
   addToFavorites,
   removeFavorites }) => {
 
-  backgroundImage = {
+  const backgroundImage = {
     backgroundImage: `url(https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path})`
   };
 
@@ -26,22 +27,20 @@ const Card = ({
     }
   };
 
-  render() {
-    return (
-      <span className='movieCardContainer'>
-        <div className={`movieCard ${this.props.cardStyle}`} style={this.backgroundImage}>
-          <div className='movieInfo'>
-            <h2>{this.props.movie.title}</h2>
-            <h4>{this.props.movie.release_date}</h4>
-            <div onClick={this.handleFavorite}>
-              {this.props.favoriteText}
-            </div>
+  return (
+    <span className='movieCardContainer' key={key}>
+      <div className={`movieCard ${cardStyle}`} style={backgroundImage}>
+        <div className='movieInfo'>
+          <h2>{movie.title}</h2>
+          <h4>{movie.release_date}</h4>
+          <div onClick={handleFavorite}>
+            {favoriteText}
           </div>
         </div>
-      </span>
-    );
-  }
-}
+      </div>
+    </span>
+  );
+};
 
 
 Card.propTypes = {
