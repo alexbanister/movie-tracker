@@ -1,11 +1,12 @@
-// import {shallow, mount } from 'enzyme';
-// import CardCatalog from './CardCatelog';
+import configureStore from 'redux-mock-store';
+import {shallow } from 'enzyme';
+import CardCatelog from './CardCatelog';
 import * as actions from './CardCatelogActions';
 import * as reducers from './CardCatelogReducer';
-// import setUpTest from '../testConfig/setupTests.js';
+import ReactDOM from 'react-dom';
+import React from 'react';
 
-
-describe('CardCatalog', ()=>{
+describe('CardCatalog Actions', () => {
 
   it('addRecentMovies should take and array and return an action', () => {
     const recentMovies = [{
@@ -166,4 +167,55 @@ describe('CardCatalog Reducers', () => {
     expect(reducers.favoriteMovies(undefined, action)).toEqual(expectation);
   });
 
+});
+
+describe('CardCatalog snapshot', () => {
+
+  it('should always match the snapshot', () => {
+    const mockStore = configureStore();
+    const initialState = {
+      recentMovies: [{title: ''}],
+      favoriteMovies: [],
+      user: {},
+      newUser: {}
+    };
+    const store = mockStore(initialState);
+    const wrapper = shallow(<CardCatelog
+      store = {store}
+    />);
+
+    expect(wrapper).toMatchSnapshot();
+
+  });
+});
+
+describe('CardCatalog container', () => {
+
+  it('should have default state', () => {
+    const mockStore = configureStore();
+    const initialState = {
+      recentMovies: [{title: ''}],
+      favoriteMovies: [],
+      user: {},
+      newUser: {}
+    };
+    const store = mockStore(initialState);
+    const wrapper = shallow(<CardCatelog
+      store = {store}
+      recentMovies = {{recentMovies: [{title: ''}]}}
+      favoriteMovies = {{favoriteMovies: []}}
+      users = {{users: {}}}
+      newUsers = {{newUsers: {}}}
+    />);
+
+    expect(wrapper.instance().props.recentMovies).toEqual(
+      {recentMovies: [{title: ''}]}
+    );
+    expect(wrapper.instance().props.favoriteMovies).toEqual(
+      {favoriteMovies: []}
+    );
+    expect(wrapper.instance().props.users).toEqual({users: {}});
+    expect(wrapper.instance().props.newUsers).toEqual({newUsers: {}});
+
+  });
 });
