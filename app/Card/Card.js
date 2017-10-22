@@ -7,7 +7,6 @@ const Card = ({
   history,
   user,
   movie,
-  clickAction,
   cardStyle,
   favoriteText,
   addToFavorites,
@@ -46,7 +45,6 @@ const Card = ({
 Card.propTypes = {
   movie: PropTypes.object,
   user: PropTypes.object,
-  clickAction: PropTypes.func,
   removeFavorites: PropTypes.func,
   addToFavorites: PropTypes.func,
   cardStyle: PropTypes.string,
