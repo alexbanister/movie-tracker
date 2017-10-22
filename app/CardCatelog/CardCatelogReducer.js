@@ -15,6 +15,8 @@ export const favoriteMovies = (store = [], action) => {
     return [...store, action.favMov];
   case 'REMOVE_FAVORITES':
     return [...action.favoriteMovies];
+  case 'LOG_OUT':
+    return [];
   default:
     return store;
   }

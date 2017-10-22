@@ -51,7 +51,7 @@ class CardCatelog extends Component {
       user_id: this.props.user.id
     };
     await addFavoriteFetch(favoriteMovieForFetch);
-    this.props.addFavorite(movie);
+    this.props.addFavorite(favoriteMovieForFetch);
   }
 
   async getUserFavorites() {
@@ -59,8 +59,8 @@ class CardCatelog extends Component {
     this.props.getFavorites(savedFavorites.data);
   }
 
-  buildCards() {
-    return this.props.recentMovies.map( (movie, index) => {
+  buildCards(movies) {
+    return movies.map( movie => {
       let cardStyle='';
       let favoriteText='Add to Favorites';
       const isFavorite = this.props.favoriteMovies.find( fav => (
@@ -70,7 +70,8 @@ class CardCatelog extends Component {
         cardStyle='isFavorite';
         favoriteText='Remove from Favorites';
       }
-      return (<Card key={index}
+      return (<Card key={movie.id}
+        user={this.props.user}
         movie={movie}
         cardStyle={cardStyle}
         favoriteText={favoriteText}
@@ -84,12 +85,13 @@ class CardCatelog extends Component {
 
 
   render() {
+    const moviesToLoad = this.props.match.path === '/favorites' ? this.props.favoriteMovies : this.props.recentMovies
     return (
       <div className='CardCatelog'>
         <div className='slider'>
-          <Slider {...sliderOptions}>
-            {this.buildCards()}
-          </Slider>
+          {/* <Slider {...sliderOptions}> */}
+            {this.buildCards(moviesToLoad)}
+          {/* </Slider> */}
         </div>
       </div>
     );

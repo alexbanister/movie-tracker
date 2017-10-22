@@ -1,53 +1,59 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom'
 
-class Card extends Component {
+const Card = ({
+  key,
+  history,
+  user,
+  movie,
+  clickAction,
+  cardStyle,
+  favoriteText,
+  addToFavorites,
+  removeFavorites }) => {
 
-  backgroundImage = {
+  const backgroundImage = {
     backgroundImage: `url(https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path})`
   };
 
-  componentWillReceive(nextProps) {
-    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
-  }
-
-  componentWillUpdate(nextProps) {
-    return  this.props.favoriteMovies !== nextProps.favoriteMovies;
-  }
-
-  handleFavorite = () => {
-    if (this.props.cardStyle === '') {
-      this.props.addToFavorites(this.props.movie);
+  const handleFavorite = () => {
+    if (!user.id) {
+      history.push('/login');
+    } else if (cardStyle === '') {
+      addToFavorites(movie);
     } else {
       this.props.removeFavorites(this.props.movie);
     }
   };
 
-  render() {
-    return (
-      <span className='movieCardContainer'>
-        <div className={`movieCard ${this.props.cardStyle}`} style={this.backgroundImage}>
-          <div className='movieInfo'>
-            <h2>{this.props.movie.title}</h2>
-            <h4>{this.props.movie.release_date}</h4>
-            <div onClick={this.handleFavorite}>
-              {this.props.favoriteText}
-            </div>
+  return (
+    <span className='movieCardContainer' key={key}>
+      <div className={`movieCard ${cardStyle}`} style={backgroundImage}>
+        <div className='movieInfo'>
+          <h2>{movie.title}</h2>
+          <h4>{movie.release_date}</h4>
+          <div onClick={handleFavorite}>
+            {favoriteText}
           </div>
         </div>
-      </span>
-    );
-  }
-}
+      </div>
+    </span>
+  );
+};
 
 
 Card.propTypes = {
   movie: PropTypes.object,
+  user: PropTypes.object,
+  clickAction: PropTypes.func,
   removeFavorites: PropTypes.func,
   addToFavorites: PropTypes.func,
   cardStyle: PropTypes.string,
   favoriteText: PropTypes.string,
-  favoriteMovies: PropTypes.array
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 };
 
-export default Card;
+export default withRouter(Card);
