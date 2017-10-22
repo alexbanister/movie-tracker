@@ -201,11 +201,11 @@ describe('CardCatalog container', () => {
     };
     const store = mockStore(initialState);
     const wrapper = shallow(<CardCatelog
-      store = {store}
-      recentMovies = {{recentMovies: [{title: ''}]}}
-      favoriteMovies = {{favoriteMovies: []}}
-      users = {{users: {}}}
-      newUsers = {{newUsers: {}}}
+      store={store}
+      recentMovies={{recentMovies: [{title: ''}]}}
+      favoriteMovies={{favoriteMovies: []}}
+      users={{users: {}}}
+      newUsers={{newUsers: {}}}
     />);
 
     expect(wrapper.instance().props.recentMovies).toEqual(
