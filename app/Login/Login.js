@@ -9,8 +9,8 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: 'tman2272@aol.com',
-      password: 'password',
+      email: '',
+      password: '',
       disabled: true,
       loginError: false
     };

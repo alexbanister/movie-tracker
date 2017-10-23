@@ -1,5 +1,12 @@
 import * as actions from './LoginAction';
 import * as reducers from './LoginReducer';
+import configureStore from 'redux-mock-store';
+import { shallow, mount } from 'enzyme';
+import ReactDOM from 'react-dom';
+import Login from './Login';
+import createRouterContext from 'react-router-test-context';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 describe('Login action', ()=>{
 
@@ -54,5 +61,77 @@ describe('CardCatalog Reducers', () => {
 
     expect(reducers.user(undefined, action)).toEqual(expectation);
   });
+});
 
+describe('Login snapshot', () => {
+
+  it('should always match the snapshot', () => {
+    const mockStore = configureStore();
+    const initialState = {
+      user: {}
+    };
+    const store = mockStore(initialState);
+    const wrapper = shallow(<Login
+      store = {store}
+    />);
+
+    expect(wrapper).toMatchSnapshot();
+
+  });
+});
+
+describe('Login container', () => {
+
+  it('should have default state', () => {
+    const mockStore = configureStore();
+    const initialState = {
+      user: {}
+    };
+    const store = mockStore(initialState);
+    const context = createRouterContext();
+    const childContextTypes = {
+      router: PropTypes.object
+    };
+    const wrapper = mount(<Login
+      store={store}
+      users={{users: {}}}
+    />, {context, childContextTypes});
+
+    expect(wrapper.instance().props.users).toEqual({users: {}});
+
+  });
+});
+
+describe('Login container', () => {
+
+  it.skip('should have default state', () => {
+    const mockStore = configureStore();
+    const initialState = {
+      user: {id:1}
+    };
+    const store = mockStore(initialState);
+    const context = createRouterContext();
+    const childContextTypes = {
+      router: PropTypes.object
+    };
+    const wrapper = mount(<Login
+
+      user={initialState}
+    />);
+    const expected = {
+      email: 'Mr.Mike@mrmike.com',
+      password: 'Sir Will',
+      disabled: true,
+      loginError: false
+    };
+    const email = wrapper.find('input').first()
+    // const password =wrapper.find('input').last()
+    console.log(wrapper.props());
+
+    email.simulate('change', {target: {value: 'Mr.Mike@mrmike.com'}})
+    // .simulate('change', {target: {value: 'Sir Will'}})
+    console.log(wrapper.state());
+    expect(wrapper.state().email).toEqual(expected.email);
+
+  });
 });
