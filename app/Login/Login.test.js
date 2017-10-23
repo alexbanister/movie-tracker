@@ -82,7 +82,7 @@ describe('Login snapshot', () => {
 
 describe('Login container', () => {
 
-  it('should have default state', () => {
+  it('should have default state from store', () => {
     const mockStore = configureStore();
     const initialState = {
       user: {}
@@ -115,22 +115,20 @@ describe('Login container', () => {
       router: PropTypes.object
     };
     const wrapper = mount(<Login
-
+      store={store}
       user={initialState}
-    />);
+    />, {context, childContextTypes});
     const expected = {
       email: 'Mr.Mike@mrmike.com',
       password: 'Sir Will',
       disabled: true,
       loginError: false
     };
-    const email = wrapper.find('input').first()
+    const email = wrapper.find('input').first();
     // const password =wrapper.find('input').last()
-    console.log(wrapper.props());
 
-    email.simulate('change', {target: {value: 'Mr.Mike@mrmike.com'}})
+    email.simulate('change', {target: {value: 'Mr.Mike@mrmike.com'}});
     // .simulate('change', {target: {value: 'Sir Will'}})
-    console.log(wrapper.state());
     expect(wrapper.state().email).toEqual(expected.email);
 
   });

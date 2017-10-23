@@ -1,4 +1,4 @@
 {
-  "plugins": ["transform-class-properties"],
-  "presets": ["latest", "react"]
+  "plugins": ["transform-class-properties", "add-module-exports", "transform-es2015-modules-umd"],
+  "presets": ["latest", "react", "es2015"]
 }
