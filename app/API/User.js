@@ -6,7 +6,8 @@ const userLogin = (email, password) => {
   })
     .then(response => response.json())
     .then(parsedResponse => parsedResponse)
-    .catch(error => console.log(error.json()));
+    .catch(error => error.json())
+    .then(parsedError => parsedError);
 };
 
 const userSignUp = (email, password, name) => {
@@ -17,7 +18,8 @@ const userSignUp = (email, password, name) => {
   })
     .then(response => response.json())
     .then(parsedResponse => parsedResponse)
-    .catch(error => console.log(error.json()));
+    .catch(error => error.json())
+    .then(parsedError => parsedError);
 };
 
 const addFavoriteFetch = (favMov) => {
@@ -28,7 +30,8 @@ const addFavoriteFetch = (favMov) => {
   })
     .then(response => response.json())
     .then(jsonResponse => jsonResponse)
-    .catch(error => console.log(error.json()));
+    .catch(error => error.json()).
+    then(parsedError => parsedError);
 };
 
 const fetchFavorites = (id) => {
@@ -43,7 +46,7 @@ const fetchRemoveFavorite = (userId, favId) => {
     headers: {'Content-Type': 'application/json'}
   })
     .then(response => response.json())
-    .then(parsed => console.log(parsed));
+    .then(parsed => parsed);
 };
 
 module.exports = {
