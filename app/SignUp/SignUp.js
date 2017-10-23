@@ -92,8 +92,10 @@ class SignUp extends Component {
           placeholder='Please Retype Password'
           onChange={(event) => this.handleChange('retypePassword', event)}
         />
-        <input type='submit'
-          disabled={this.state.disabled}/>
+        <button type='submit'
+          disabled={this.state.disabled}>
+            Sign Up
+        </button>
       </form>
     );
   }
