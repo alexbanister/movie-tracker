@@ -3,12 +3,15 @@
   height: 25em;
   .movieCard {
     margin: 1em;
-    height: 25em;
+    margin-bottom: 5em;
+    height: 30vh;
     outline: 1px solid black;
-    overflow: hidden;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .movieInfo {
     width: 20vw;
@@ -22,5 +25,15 @@
   }
   .isFavorite {
     box-shadow: $glow;
+    .favoriteText {
+      text-align: center;
+      padding: 1em;
+      @include linear-gradient($brand-blue, $light-blue);
+    }
+  }
+  .favoriteText {
+    text-align: center;
+    padding: 1em;
+    @include linear-gradient($highlight, $highlight-dark);
   }
 }

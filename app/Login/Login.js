@@ -38,29 +38,35 @@ class Login extends Component {
 
   render() {
     return (
-      <form onSubmit={(event) => this.handleLogin(event)}>
-        {
-          this.state.loginError &&
-          <h2>Email and Password Do Not Match</h2>
-        }
-        {
-          this.props.user.id &&
-          <Redirect to="/" />
-        }
-        <input
-          type='email'
-          value={this.state.email}
-          onChange={(event) => this.handleChange('email', event)}
-          placeholder='Email'
-        />
-        <input
-          type='password'
-          value={this.state.password}
-          onChange={(event) => this.handleChange('password', event)}
-          placeholder='Password'
-        />
-        <input type='submit' disabled={this.state.disabled} />
-      </form>
+      <div className='login'>
+        <form onSubmit={(event) => this.handleLogin(event)}>
+          {
+            this.state.loginError &&
+            <h2>Email and Password Do Not Match</h2>
+          }
+          {
+            this.props.user.id &&
+            <Redirect to="/" />
+          }
+          <input
+            type='email'
+            value={this.state.email}
+            onChange={(event) => this.handleChange('email', event)}
+            placeholder='Email'
+          />
+          <input
+            type='password'
+            value={this.state.password}
+            onChange={(event) => this.handleChange('password', event)}
+            placeholder='Password'
+          />
+          <button
+            type='submit'
+            disabled={this.state.disabled}>
+              Login
+          </button>
+        </form>
+      </div>
     );
   }
 }

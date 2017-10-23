@@ -32,9 +32,9 @@ const Card = ({
         <div className='movieInfo'>
           <h2>{movie.title}</h2>
           <h4>{movie.release_date}</h4>
-          <div onClick={handleFavorite}>
-            {favoriteText}
-          </div>
+        </div>
+        <div className='favoriteText' onClick={handleFavorite}>
+          {favoriteText}
         </div>
       </div>
     </span>

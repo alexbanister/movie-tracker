@@ -2,9 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { fetchRecentMovies } from '../API/movieDatabase';
 import Card from '../Card/Card';
-import Slider from 'react-slick';
 import PropTypes from 'prop-types';
-import sliderOptions from './sliderOptions';
 import { LoginAction } from '../Login/LoginAction';
 import {
   addRecentMovies,
@@ -103,9 +101,7 @@ class CardCatelog extends Component {
     return (
       <div className='CardCatelog'>
         <div className='slider'>
-          {/* <Slider {...sliderOptions}> */}
           {this.buildCards(moviesToLoad)}
-          {/* </Slider> */}
         </div>
       </div>
     );

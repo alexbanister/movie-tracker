@@ -6,13 +6,15 @@ body {
   padding: 0;
   font-family: 'Lato', sans-serif;
   color: $off-white;
-  background: url('http://localhost:3000/assets/background.jpg');
+  background: url('http://localhost:3000/assets/background.png');
   background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   width: 100vw;
   height: 100vh;
 }
 a {
   text-decoration: none;
+}
+#root {
+  @include linear-gradient(rgba(0,0,0,.9), rgba(0,0,0,.5));
+  min-height: 100vh;
 }
