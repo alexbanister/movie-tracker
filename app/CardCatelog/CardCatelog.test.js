@@ -3,7 +3,6 @@ import {shallow } from 'enzyme';
 import CardCatelog from './CardCatelog';
 import * as actions from './CardCatelogActions';
 import * as reducers from './CardCatelogReducer';
-import ReactDOM from 'react-dom';
 import React from 'react';
 
 describe('CardCatalog Actions', () => {
