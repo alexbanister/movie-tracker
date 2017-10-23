@@ -2,8 +2,7 @@ import * as actions from './SignUpAction';
 import * as reducers from './SignUpReducer';
 import { shallow, mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import ReactDOM from 'react-dom';
-import SignUp from './SignUp';
+import SignUpContainer, { SignUp } from './SignUp';
 import createRouterContext from 'react-router-test-context';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -59,7 +58,7 @@ describe('SignUp snapshot', () => {
       user: {}
     };
     const store = mockStore(initialState);
-    const wrapper = shallow(<SignUp
+    const wrapper = shallow(<SignUpContainer
       store = {store}
     />);
 
@@ -80,12 +79,44 @@ describe('SignUp container', () => {
     const childContextTypes = {
       router: PropTypes.object
     };
-    const wrapper = mount(<SignUp
+    const wrapper = mount(<SignUpContainer
       store={store}
       users={{users: {}}}
     />, {context, childContextTypes});
 
     expect(wrapper.instance().props.users).toEqual({users: {}});
 
+  });
+});
+
+describe('SignUp state', () => {
+  it('should have default state', () => {
+    const context = createRouterContext();
+    const initialState = {};
+    const expected = {
+      name: 'Yung-Jhun',
+      email: 'Yung@Jhun.tacos',
+      password: 'complete',
+      retypePassword: 'complete',
+      signUpError: false,
+      disabled: false,
+      passwordValidationError: false
+    };
+
+    const wrapper = shallow(<SignUp
+      user={initialState}
+    />, context);
+
+    const name = wrapper.find('[type="text"]');
+    const email = wrapper.find('[type="email"]');
+    const password = wrapper.find('[type="password"]').first();
+    const rePassword = wrapper.find('[type="password"]').last();
+
+    name.simulate('change', {target: {value: 'Yung-Jhun'}});
+    email.simulate('change', {target: {value: 'Yung@Jhun.tacos'}});
+    password.simulate('change', {target: {value: 'complete'}});
+    rePassword.simulate('change', {target: {value: 'complete'}});
+
+    expect(wrapper.state()).toEqual(expected);
   });
 });
