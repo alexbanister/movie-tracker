@@ -2,8 +2,7 @@ import * as actions from './LoginAction';
 import * as reducers from './LoginReducer';
 import configureStore from 'redux-mock-store';
 import { shallow, mount } from 'enzyme';
-import ReactDOM from 'react-dom';
-import Login from './Login';
+import LoginContainer, { Login } from './Login';
 import createRouterContext from 'react-router-test-context';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -71,7 +70,7 @@ describe('Login snapshot', () => {
       user: {}
     };
     const store = mockStore(initialState);
-    const wrapper = shallow(<Login
+    const wrapper = shallow(<LoginContainer
       store = {store}
     />);
 
@@ -92,7 +91,7 @@ describe('Login container', () => {
     const childContextTypes = {
       router: PropTypes.object
     };
-    const wrapper = mount(<Login
+    const wrapper = mount(<LoginContainer
       store={store}
       users={{users: {}}}
     />, {context, childContextTypes});
@@ -102,34 +101,27 @@ describe('Login container', () => {
   });
 });
 
-describe('Login container', () => {
-
-  it.skip('should have default state', () => {
-    const mockStore = configureStore();
-    const initialState = {
-      user: {id:1}
-    };
-    const store = mockStore(initialState);
+describe('Login state', () => {
+  it('should have default state', () => {
     const context = createRouterContext();
-    const childContextTypes = {
-      router: PropTypes.object
-    };
-    const wrapper = mount(<Login
-      store={store}
-      user={initialState}
-    />, {context, childContextTypes});
+    const initialState = {};
     const expected = {
       email: 'Mr.Mike@mrmike.com',
       password: 'Sir Will',
       disabled: true,
       loginError: false
     };
+
+    const wrapper = shallow(<Login
+      user={initialState}
+    />, context);
+
     const email = wrapper.find('input').first();
-    // const password =wrapper.find('input').last()
+    const password =wrapper.find('input').last();
 
     email.simulate('change', {target: {value: 'Mr.Mike@mrmike.com'}});
-    // .simulate('change', {target: {value: 'Sir Will'}})
-    expect(wrapper.state().email).toEqual(expected.email);
+    password.simulate('change', {target: {value: 'Sir Will'}});
 
+    expect(wrapper.state()).toEqual(expected);
   });
 });

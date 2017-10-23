@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme';
 import App from './App';
-import ReactDOM from 'react-dom';
 import React from 'react';
 
 describe('App snapshot', () => {

@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-class SignUp extends Component {
+export class SignUp extends Component {
   constructor() {
     super();
-    this.state ={
+    this.state = {
       name: '',
       email: '',
       password: '',

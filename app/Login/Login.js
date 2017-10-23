@@ -5,7 +5,7 @@ import { LoginAction } from './LoginAction';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-class Login extends Component {
+export class Login extends Component {
   constructor() {
     super();
     this.state = {

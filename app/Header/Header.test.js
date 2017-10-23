@@ -1,6 +1,5 @@
 import * as actions from './HeaderAction';
 import { shallow, mount } from 'enzyme';
-import ReactDOM from 'react-dom';
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import Header from './Header';
