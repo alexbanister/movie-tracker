@@ -54,25 +54,4 @@ describe('Header container', () => {
     expect(wrapper.instance().props.users).toEqual({users: {}});
 
   });
-
-  it.skip('should have a button that fires correct action', () => {
-    const mockStore = configureStore();
-    const initialState = {
-      user: {id: 1}
-    };
-    const store = mockStore(initialState);
-    const context = createRouterContext();
-    const childContextTypes = {
-      router: PropTypes.object
-    };
-    const mockHandleClick = jest.fn();
-    const wrapper = mount(<Header
-      store={store}
-      users={{users: {id: 1}}}
-      logoutAction={mockHandleClick}
-    />, {context, childContextTypes});
-
-    wrapper.find('.redux-click').last().simulate('click');
-    expect(mockHandleClick).toHaveBeenCalled();
-  });
 });

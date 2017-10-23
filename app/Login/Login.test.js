@@ -81,7 +81,7 @@ describe('Login snapshot', () => {
 
 describe('Login container', () => {
 
-  it('should have default state', () => {
+  it('should have default state from store', () => {
     const mockStore = configureStore();
     const initialState = {
       user: {}
