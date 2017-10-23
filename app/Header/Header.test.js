@@ -43,16 +43,20 @@ describe('Header container', () => {
       user: {}
     };
     const store = mockStore(initialState);
-    const wrapper = shallow(<Header
+    const context = createRouterContext();
+    const childContextTypes = {
+      router: PropTypes.object
+    };
+    const wrapper = mount(<Header
       store={store}
       users={{users: {}}}
-    />);
+    />, {context, childContextTypes});
 
     expect(wrapper.instance().props.users).toEqual({users: {}});
 
   });
 
-  it('should have a button that fires correct action', () => {
+  it.skip('should have a button that fires correct action', () => {
     const mockStore = configureStore();
     const initialState = {
       user: {id: 1}
@@ -69,8 +73,7 @@ describe('Header container', () => {
       logoutAction={mockHandleClick}
     />, {context, childContextTypes});
 
-console.log(wrapper.debug());
-    wrapper.find('.auth-links').simulate('click');
-    expect(mockHandleClick).toHaveBeenCalled(1);
+    wrapper.find('.redux-click').last().simulate('click');
+    expect(mockHandleClick).toHaveBeenCalled();
   });
 });

@@ -22,7 +22,7 @@ const Header = (props)=>{
       {
         props.user.id &&
         <div className='auth-links'>
-          <NavLink to='/' onClick={handleLogout}>Log Out</NavLink>
+          <NavLink className='redux-click' to='/' onClick={handleLogout}>Log Out</NavLink>
         </div>
       }
       <h1>Movie<strong>Tracker</strong></h1>
